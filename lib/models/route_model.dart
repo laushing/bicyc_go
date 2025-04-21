@@ -4,8 +4,8 @@ class CyclingRoute {
   final String description;
   final double distance;
   final int estimatedTimeMinutes;
-  final String difficulty; // 'easy', 'medium', 'hard'
-  final List<List<double>> coordinates; // List of [lat, lng] points
+  final String difficulty;
+  final List<List<double>> coordinates;
   final String imageUrl;
 
   CyclingRoute({
@@ -16,25 +16,10 @@ class CyclingRoute {
     required this.estimatedTimeMinutes,
     required this.difficulty,
     required this.coordinates,
-    this.imageUrl = '',
+    required this.imageUrl,
   });
 
-  // Convert to/from JSON
-  factory CyclingRoute.fromJson(Map<String, dynamic> json) {
-    return CyclingRoute(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      distance: json['distance'].toDouble(),
-      estimatedTimeMinutes: json['estimatedTimeMinutes'],
-      difficulty: json['difficulty'],
-      coordinates: List<List<double>>.from(
-        json['coordinates'].map((point) => List<double>.from(point)),
-      ),
-      imageUrl: json['imageUrl'] ?? '',
-    );
-  }
-
+  // Add methods for JSON serialization
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -46,5 +31,21 @@ class CyclingRoute {
       'coordinates': coordinates,
       'imageUrl': imageUrl,
     };
+  }
+
+  // Create a route from JSON
+  factory CyclingRoute.fromJson(Map<String, dynamic> json) {
+    return CyclingRoute(
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      distance: json['distance'].toDouble(),
+      estimatedTimeMinutes: json['estimatedTimeMinutes'],
+      difficulty: json['difficulty'],
+      coordinates: (json['coordinates'] as List)
+          .map((coordList) => (coordList as List).cast<double>())
+          .toList(),
+      imageUrl: json['imageUrl'],
+    );
   }
 }

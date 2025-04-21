@@ -1,0 +1,70 @@
+{
+  "@@locale": "zh",
+  "appTitle": "單車行",
+  
+  "dashboard": "儀表板",
+  
+  "map": "地圖",
+  
+  "rewards": "獎勵",
+  
+  "profile": "個人檔案",
+  
+  "settings": "設置",
+  
+  "language": "語言",
+  
+  "planRoute": "規劃路線",
+  
+  "createCustomRoute": "創建自定義路線",
+  
+  "saveRoute": "保存路線",
+  
+  "cancel": "取消",
+  
+  "addPoint": "添加點",
+  
+  "editRouteName": "編輯路線名稱",
+  
+  "enterRouteName": "輸入路線名稱",
+  
+  "routeNameHint": "為您的自定義路線輸入名稱",
+  
+  "pointAdded": "點已添加！（共 {count} 個）",
+  
+  "routeSaved": "路線保存成功",
+  
+  "routeSaveError": "保存路線失敗",
+  
+  "needMorePoints": "創建路線至少需要 2 個點",
+  
+  "tapToAddPoints": "點擊地圖添加路點。完成後點擊「保存路線」。",
+  
+  "routeSelected": "已選擇路線：{name}",
+  
+  "startNavigation": "開始導航",
+  
+  "navigationStarted": "正在為 {name} 啟動導航",
+  
+  "routeName": "路線名稱：",
+  
+  "plannedDateTime": "計劃日期和時間：",
+  
+  "date": "日期：{day}/{month}/{year}",
+  
+  "time": "時間：{hour}:{minute}",
+  
+  "location": "位置：({lat}, {lng})",
+  
+  "addPointToRoute": "添加點到 \"{name}\"？",
+  
+  "noRoutesAvailable": "沒有可用路線",
+  
+  "failedToLoadRoutes": "載入路線失敗：{error}",
+  
+  "start": "起點",
+  
+  "end": "終點",
+  
+  "loadRoutesError": "載入路線時出錯：{error}"
+}

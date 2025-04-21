@@ -1,0 +1,70 @@
+{
+  "@@locale": "en",
+  "appTitle": "BicycGo",
+
+  "dashboard": "Dashboard",
+
+  "map": "Map",
+
+  "rewards": "Rewards",
+
+  "profile": "Profile",
+
+  "settings": "Settings",
+
+  "language": "Language",
+
+  "planRoute": "Plan a Route",
+
+  "createCustomRoute": "Create Custom Route",
+
+  "saveRoute": "Save Route",
+
+  "cancel": "Cancel",
+
+  "addPoint": "Add Point",
+
+  "editRouteName": "Edit Route Name",
+
+  "enterRouteName": "Enter a name for your route",
+
+  "routeNameHint": "Enter a name for your custom route",
+
+  "pointAdded": "Point added! ({count} total)",
+
+  "routeSaved": "Route saved successfully",
+
+  "routeSaveError": "Failed to save route",
+
+  "needMorePoints": "Add at least 2 points to create a route",
+
+  "tapToAddPoints": "Tap on the map to add waypoints. Tap \"Save Route\" when finished.",
+  
+  "routeSelected": "Route selected: {name}",
+  
+  "startNavigation": "Start Navigation",
+  
+  "navigationStarted": "Starting navigation for {name}",
+  
+  "routeName": "Route Name:",
+  
+  "plannedDateTime": "Planned Date & Time:",
+  
+  "date": "Date: {day}/{month}/{year}",
+  
+  "time": "Time: {hour}:{minute}",
+  
+  "location": "Location: ({lat}, {lng})",
+  
+  "addPointToRoute": "Add point to \"{name}\"?",
+  
+  "noRoutesAvailable": "No routes available",
+  
+  "failedToLoadRoutes": "Failed to load routes: {error}",
+  
+  "start": "Start",
+  
+  "end": "End",
+
+  "loadRoutesError": "Error loading routes: {error}"
+}
