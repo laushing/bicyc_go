@@ -107,5 +107,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get end => 'End';
 
   @override
+  String get navigationComplete => 'Navigation Complete';
+
+  @override
+  String get reachedDestination => 'You have reached your destination on {routeName}!';
+
+  @override
+  String get returnToMap => 'Return to Map';
+
+  @override
+  String get navigating => 'Navigating';
+
+  @override
+  String get waypoint => 'Waypoint';
+
+  @override
+  String get distanceToNextTurn => 'Distance to next turn: {distance} km';
+
+  @override
+  String get estimatedTimeRemaining => 'Estimated time remaining: {time} hours';
+
+  @override
+  String get turnLeft => 'Turn left at the next intersection';
+
+  @override
+  String get turnRight => 'Turn right at the next intersection';
+
+  @override
+  String get continuesStraight => 'Continue straight';
+
+  @override
   String get chineseTraditional => 'Chinese (Traditional)';
 }

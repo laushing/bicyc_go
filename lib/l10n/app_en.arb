@@ -66,5 +66,25 @@
   
   "end": "End",
 
-  "loadRoutesError": "Error loading routes: {error}"
+  "loadRoutesError": "Error loading routes: {error}",
+
+  "navigationComplete": "Navigation complete!",
+
+  "reachDestination": "You have reached your destination!",
+
+  "returnToMap": "Return to Map",
+
+  "navgigating": "Navigating...",
+
+  "waypoint": "Waypoint",
+
+  "distanceToNextTurn": "Distance to next turn: {distance}",
+
+  "estimatedTimeRemaining": "Estimated time remaining: {time}",
+
+  "turnLeft": "Turn Left",
+
+  "turnRight": "Turn Right",
+
+  "continuesStraight": "Continue Straight"
 }

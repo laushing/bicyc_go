@@ -270,7 +270,7 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void _startNavigation(CyclingRoute route) {
-    _mapService.startARNavigation(route);
+    _mapService.startARNavigation(route, context); // Pass context for navigation
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('${l10n?.navigationStarted ?? 'Starting navigation for'} ${route.name}')),
     );

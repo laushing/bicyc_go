@@ -66,5 +66,25 @@
   
   "end": "終點",
   
-  "loadRoutesError": "載入路線時出錯：{error}"
+  "loadRoutesError": "載入路線時出錯：{error}",
+
+  "navigationComplete": "導航完成！",
+
+  "reachedDestination": "已到達目的地！",
+
+  "returnToMap": "返回地圖",
+
+  "navigating": "導航中...",
+
+  "waypoint": "路點",
+
+  "distanceToNextTurn": "距離下一個轉彎：{distance}",
+
+  "estimatedTimeRemaining": "預計剩餘時間：{time}",
+
+  "turnLeft": "左轉",
+
+  "turnRight": "右轉",
+
+  "continuesStraight": "繼續直行"
 }

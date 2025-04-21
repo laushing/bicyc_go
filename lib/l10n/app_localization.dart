@@ -99,6 +99,26 @@ abstract class AppLocalizations {
   String get chineseTraditional;
 
   String get loadRoutesError;
+
+  String get navigationComplete;
+
+  String get reachedDestination;
+
+  String get returnToMap;
+
+  String get navigating;
+
+  String get waypoint;
+
+  String get distanceToNextTurn;
+
+  String get estimatedTimeRemaining;
+
+  String get turnLeft;
+
+  String get turnRight;
+
+  String get continuesStraight;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -105,6 +105,36 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get loadRoutesError => '加載路線時出錯！請重試。';
+
+  @override
+  String get navigationComplete => '導航已完成！';
+
+  @override
+  String get reachedDestination => '您已到達目的地：{routeName}';
+
+  @override
+  String get returnToMap => '返回地圖';
+
+  @override
+  String get navigating => '導航中';
+
+  @override
+  String get waypoint => '路線點';
+
+  @override
+  String get distanceToNextTurn => '距離下一個轉彎：{distance}';
+
+  @override
+  String get estimatedTimeRemaining => '預計剩餘時間：{time}';
+
+  @override
+  String get turnLeft => '向左轉';
+
+  @override
+  String get turnRight => '向右轉';
+
+  @override
+  String get continuesStraight => '繼續直行';
   
 
   @override

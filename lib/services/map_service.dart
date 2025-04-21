@@ -5,6 +5,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import '../models/route_model.dart';
 import '../l10n/app_localization.dart';
+import '../screens/ar_navigation_screen.dart';
 
 class MapService {
   final mapController = MapController();
@@ -562,9 +563,17 @@ class MapService {
     };
   }
   
-  // Method for AR integration placeholder
-  void startARNavigation(CyclingRoute route) {
+  // Method for AR integration - now navigates to AR screen
+  void startARNavigation(CyclingRoute route, BuildContext context) {
     print('Starting AR navigation for route: ${route.name}');
+    
+    // Navigate to the AR navigation screen
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ARNavigationScreen(route: route),
+      ),
+    );
   }
 
   // Get tap position on map
