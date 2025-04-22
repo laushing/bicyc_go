@@ -1,96 +1,320 @@
 {
   "@@locale": "en",
+  
+  "@appTitle": {
+    "description": "The title of the application"
+  },
   "appTitle": "BicycGo",
 
+  "@dashboard": {
+    "description": "Label for the dashboard navigation item"
+  },
   "dashboard": "Dashboard",
 
+  "@map": {
+    "description": "Label for the map navigation item"
+  },
   "map": "Map",
 
+  "@rewards": {
+    "description": "Label for the rewards navigation item"
+  },
   "rewards": "Rewards",
 
+  "@profile": {
+    "description": "Label for the profile navigation item"
+  },
   "profile": "Profile",
 
+  "@settings": {
+    "description": "Label for the settings navigation item"
+  },
   "settings": "Settings",
 
+  "@language": {
+    "description": "Label for language setting"
+  },
   "language": "Language",
 
+  "@planRoute": {
+    "description": "Button text for planning a route"
+  },
   "planRoute": "Plan a Route",
 
+  "@createCustomRoute": {
+    "description": "Button text for creating a custom route"
+  },
   "createCustomRoute": "Create Custom Route",
 
+  "@saveRoute": {
+    "description": "Button text for saving a route"
+  },
   "saveRoute": "Save Route",
 
+  "@cancel": {
+    "description": "Button text for canceling an action"
+  },
   "cancel": "Cancel",
 
+  "@addPoint": {
+    "description": "Button text for adding a point to a route"
+  },
   "addPoint": "Add Point",
 
+  "@editRouteName": {
+    "description": "Dialog title for editing route name"
+  },
   "editRouteName": "Edit Route Name",
 
+  "@enterRouteName": {
+    "description": "Instruction to enter a route name"
+  },
   "enterRouteName": "Enter a name for your route",
 
+  "@routeNameHint": {
+    "description": "Hint text for route name input field"
+  },
   "routeNameHint": "Enter a name for your custom route",
 
+  "@pointAdded": {
+    "description": "Message shown when a point is added to the route",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
   "pointAdded": "Point added! ({count} total)",
 
+  "@routeSaved": {
+    "description": "Message shown when a route is saved successfully"
+  },
   "routeSaved": "Route saved successfully",
 
+  "@routeSaveError": {
+    "description": "Error message shown when route saving fails"
+  },
   "routeSaveError": "Failed to save route",
 
+  "@needMorePoints": {
+    "description": "Message indicating more points are needed to create a route"
+  },
   "needMorePoints": "Add at least 2 points to create a route",
 
+  "@tapToAddPoints": {
+    "description": "Instruction for adding waypoints on the map"
+  },
   "tapToAddPoints": "Tap on the map to add waypoints. Tap \"Save Route\" when finished.",
   
+  "@routeSelected": {
+    "description": "Message shown when a route is selected",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Victoria Peak Loop"
+      }
+    }
+  },
   "routeSelected": "Route selected: {name}",
   
+  "@startNavigation": {
+    "description": "Button text to start navigation"
+  },
   "startNavigation": "Start Navigation",
   
+  "@navigationStarted": {
+    "description": "Message shown when navigation is started for a route",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Tolo Harbour Trail"
+      }
+    }
+  },
   "navigationStarted": "Starting navigation for {name}",
   
+  "@routeName": {
+    "description": "Label for route name"
+  },
   "routeName": "Route Name:",
   
+  "@plannedDateTime": {
+    "description": "Label for planned date and time"
+  },
   "plannedDateTime": "Planned Date & Time:",
   
+  "@date": {
+    "description": "Date format display",
+    "placeholders": {
+      "day": {
+        "type": "int",
+        "example": "15"
+      },
+      "month": {
+        "type": "int",
+        "example": "8"
+      },
+      "year": {
+        "type": "int",
+        "example": "2023"
+      }
+    }
+  },
   "date": "Date: {day}/{month}/{year}",
   
+  "@time": {
+    "description": "Time format display",
+    "placeholders": {
+      "hour": {
+        "type": "String",
+        "example": "14"
+      },
+      "minute": {
+        "type": "String",
+        "example": "30"
+      }
+    }
+  },
   "time": "Time: {hour}:{minute}",
   
+  "@location": {
+    "description": "Location coordinates display",
+    "placeholders": {
+      "lat": {
+        "type": "String",
+        "example": "22.3193"
+      },
+      "lng": {
+        "type": "String",
+        "example": "114.1694"
+      }
+    }
+  },
   "location": "Location: ({lat}, {lng})",
   
+  "@addPointToRoute": {
+    "description": "Prompt to add a point to a named route",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "My Custom Route"
+      }
+    }
+  },
   "addPointToRoute": "Add point to \"{name}\"?",
   
+  "@noRoutesAvailable": {
+    "description": "Message shown when no routes are available"
+  },
   "noRoutesAvailable": "No routes available",
   
+  "@failedToLoadRoutes": {
+    "description": "Error message when routes fail to load",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "Network error"
+      }
+    }
+  },
   "failedToLoadRoutes": "Failed to load routes: {error}",
   
+  "@start": {
+    "description": "Label for start point of a route"
+  },
   "start": "Start",
   
+  "@end": {
+    "description": "Label for end point of a route"
+  },
   "end": "End",
 
+  "@loadRoutesError": {
+    "description": "Error message when loading routes",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "Connection timeout"
+      }
+    }
+  },
   "loadRoutesError": "Error loading routes: {error}",
 
+  "@navigationComplete": {
+    "description": "Message shown when navigation is completed"
+  },
   "navigationComplete": "Navigation complete!",
 
+  "@reachDestination": {
+    "description": "Message shown when destination is reached"
+  },
   "reachDestination": "You have reached your destination!",
 
+  "@returnToMap": {
+    "description": "Button text to return to map view"
+  },
   "returnToMap": "Return to Map",
 
+  "@navgigating": {
+    "description": "Status text when navigation is in progress"
+  },
   "navgigating": "Navigating...",
 
+  "@waypoint": {
+    "description": "Label for a waypoint on the route"
+  },
   "waypoint": "Waypoint",
 
+  "@distanceToNextTurn": {
+    "description": "Distance to the next turn in navigation",
+    "placeholders": {
+      "distance": {
+        "type": "String",
+        "example": "0.5 km"
+      }
+    }
+  },
   "distanceToNextTurn": "Distance to next turn: {distance}",
 
+  "@estimatedTimeRemaining": {
+    "description": "Estimated time remaining for navigation",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "10 min"
+      }
+    }
+  },
   "estimatedTimeRemaining": "Estimated time remaining: {time}",
 
+  "@turnLeft": {
+    "description": "Direction instruction to turn left"
+  },
   "turnLeft": "Turn Left",
 
+  "@turnRight": {
+    "description": "Direction instruction to turn right"
+  },
   "turnRight": "Turn Right",
 
+  "@continuesStraight": {
+    "description": "Direction instruction to continue straight"
+  },
   "continuesStraight": "Continue Straight",
 
+  "@nearbyCyclists": {
+    "description": "Label for nearby cyclists section"
+  },
   "nearbyCyclists": "Nearby Cyclists",
 
+  "@locationSharingEnabled": {
+    "description": "Message shown when location sharing is enabled"
+  },
   "locationSharingEnabled": "Location sharing enabled",
 
+  "@more": {
+    "description": "Text indicating there are more items not shown"
+  },
   "more": "More"
 }

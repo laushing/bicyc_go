@@ -1,4 +1,4 @@
-import 'package:intl/intl.dart' as intl;
+//import 'package:intl/intl.dart' as intl;
 import 'app_localization.dart';
 
 class AppLocalizationsEn extends AppLocalizations {
