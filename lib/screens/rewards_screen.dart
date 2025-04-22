@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/reward_card.dart';
 
 class RewardsScreen extends StatelessWidget {
-  const RewardsScreen({Key? key}) : super(key: key);
+  const RewardsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:intl/intl.dart' as intl;
 import 'app_localization.dart';
 
 class AppLocalizationsZh extends AppLocalizations {
-  AppLocalizationsZh([String locale = 'zh']) : super(locale);
+  AppLocalizationsZh([super.locale = 'zh']);
 
   @override
   String get english => '英文';
@@ -135,6 +135,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get continuesStraight => '繼續直行';
+
+  @override
+  String get nearbyCyclists => '附近的騎行者';
+
+  @override
+  String get locationSharingEnabled => '位置共享';
+
+  @override
+  String get more => '更多';
   
 
   @override

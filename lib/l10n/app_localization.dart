@@ -119,6 +119,12 @@ abstract class AppLocalizations {
   String get turnRight;
 
   String get continuesStraight;
+
+  String get nearbyCyclists;
+
+  String get locationSharingEnabled;
+
+  String get more;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

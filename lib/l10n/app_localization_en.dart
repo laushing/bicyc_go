@@ -2,7 +2,7 @@ import 'package:intl/intl.dart' as intl;
 import 'app_localization.dart';
 
 class AppLocalizationsEn extends AppLocalizations {
-  AppLocalizationsEn([String locale = 'en']) : super(locale);
+  AppLocalizationsEn([super.locale = 'en']);
 
   @override
   String get english => 'English';
@@ -135,6 +135,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get continuesStraight => 'Continue straight';
+
+  @override
+  String get nearbyCyclists => 'Nearby Cyclists';
+
+  @override
+  String get locationSharingEnabled => 'Location sharing enabled!';
+
+  @override
+  String get more => 'More';
 
   @override
   String get chineseTraditional => 'Chinese (Traditional)';

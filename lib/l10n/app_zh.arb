@@ -86,5 +86,11 @@
 
   "turnRight": "右轉",
 
-  "continuesStraight": "繼續直行"
+  "continuesStraight": "繼續直行",
+
+  "nearbyCyclists": "附近的單車",
+
+  "locationSharingEnabled": "位置共享已啟用",
+
+  "more": "更多"
 }

@@ -7,10 +7,10 @@ class SettingsScreen extends StatefulWidget {
   final Locale currentLocale;
 
   const SettingsScreen({
-    Key? key, 
+    super.key, 
     required this.onLocaleChanged, 
     required this.currentLocale
-  }) : super(key: key);
+  });
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();

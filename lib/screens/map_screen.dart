@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import '../services/map_service.dart';
 import '../services/storage_service.dart';
+import '../services/location_sharing_service.dart';
 import '../models/route_model.dart';
 import 'dart:math';
-import 'package:latlong2/latlong.dart'; // Use this instead of Google Maps
+import 'package:latlong2/latlong.dart';
 import '../l10n/app_localization.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({Key? key}) : super(key: key);
+  const MapScreen({super.key});
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -16,12 +17,15 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   final MapService _mapService = MapService();
   final StorageService _storageService = StorageService();
+  final LocationSharingService _locationSharingService = LocationSharingService();
   List<CyclingRoute> _availableRoutes = [];
+  List<CyclistLocation> _nearbyCyclists = [];
   bool _isLoading = true;
   bool _isCreatingRoute = false;
-  List<List<double>> _customRoutePoints = [];
+  bool _isLocationSharingEnabled = false;
+  final List<List<double>> _customRoutePoints = [];
   String _customRouteName = 'Custom Route';
-  CyclingRoute? _selectedRoute; // Add this to track selected route
+  CyclingRoute? _selectedRoute;
   
   // Add a class-level variable for localization
   AppLocalizations? get l10n => AppLocalizations.of(context);
@@ -31,16 +35,43 @@ class _MapScreenState extends State<MapScreen> {
     super.initState();
     _loadRoutes();
 
-    // Set up the callback for route updates
+    // Set up callbacks
     _mapService.onRouteUpdated = () {
       setState(() {
-        // Update the custom route name from the map service
         _customRouteName = _mapService.customRouteName;
       });
-
-      // Show the name editing dialog
       _mapService.showCustomRouteNameDialog(context);
     };
+    
+    // Set up location sharing callbacks
+    _locationSharingService.onConnected = () {
+      setState(() {
+        _isLocationSharingEnabled = true;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n?.locationSharingEnabled ?? 'Location sharing enabled')),
+      );
+    };
+    
+    _locationSharingService.onDisconnected = () {
+      setState(() {
+        _isLocationSharingEnabled = false;
+        _nearbyCyclists = [];
+      });
+    };
+    
+    // Listen for cyclist updates
+    _locationSharingService.cyclistsStream.listen((cyclists) {
+      setState(() {
+        _nearbyCyclists = cyclists;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _locationSharingService.dispose();
+    super.dispose();
   }
 
   Future<void> _loadRoutes() async {
@@ -163,7 +194,7 @@ class _MapScreenState extends State<MapScreen> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(l10n?.pointAdded?.replaceAll('{count}', _customRoutePoints.length.toString()) ?? 
+        content: Text(l10n?.pointAdded.replaceAll('{count}', _customRoutePoints.length.toString()) ?? 
                       'Point added! (${_customRoutePoints.length} total)'),
         duration: const Duration(seconds: 1),
       ),
@@ -269,8 +300,19 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  void _toggleLocationSharing() {
+    if (_isLocationSharingEnabled) {
+      _locationSharingService.stopSimulation();
+      setState(() {
+        _isLocationSharingEnabled = false;
+      });
+    } else {
+      _locationSharingService.startSimulation();
+    }
+  }
+
   void _startNavigation(CyclingRoute route) {
-    _mapService.startARNavigation(route, context); // Pass context for navigation
+    _mapService.startARNavigation(route, context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('${l10n?.navigationStarted ?? 'Starting navigation for'} ${route.name}')),
     );
@@ -286,14 +328,32 @@ class _MapScreenState extends State<MapScreen> {
               : _mapService.buildMap(
                   routes: _availableRoutes,
                   customRoutePoints: _isCreatingRoute ? _customRoutePoints : null,
-                  selectedRoute: _selectedRoute, // Pass the selected route
-                  mapContext: context, // Pass the context for dialogs
+                  selectedRoute: _selectedRoute,
+                  mapContext: context,
+                  // Remove the nearbyCyclists parameter as it is not defined
                   onTap: _isCreatingRoute
                       ? (LatLng coords) {
                           _addWaypoint(coords.latitude, coords.longitude);
                         }
                       : null,
                 ),
+                
+          // Location sharing toggle button
+          Positioned(
+            top: 20,
+            right: 20,
+            child: FloatingActionButton(
+              mini: true,
+              backgroundColor: _isLocationSharingEnabled ? Colors.green : Colors.grey,
+              onPressed: _toggleLocationSharing,
+              child: Icon(
+                _isLocationSharingEnabled ? Icons.location_on : Icons.location_off,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          
+          // Bottom planning button
           Positioned(
             bottom: 20,
             left: 0,
@@ -341,16 +401,83 @@ class _MapScreenState extends State<MapScreen> {
                     ),
             ),
           ),
+          
+          // Cyclists info panel when location sharing is enabled
+          if (_isLocationSharingEnabled && _nearbyCyclists.isNotEmpty)
+            Positioned(
+              top: 80,
+              right: 10,
+              child: Container(
+                width: 200,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.9),
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      l10n?.nearbyCyclists ?? 'Nearby Cyclists',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    ...List.generate(
+                      _nearbyCyclists.length > 3 ? 3 : _nearbyCyclists.length,
+                      (index) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.directions_bike, size: 16, color: Colors.green),
+                            const SizedBox(width: 8),
+                            Text(
+                              _nearbyCyclists[index].name,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                            const Spacer(),
+                            Text(
+                              '${_nearbyCyclists[index].speed.toStringAsFixed(1)} km/h',
+                              style: const TextStyle(fontSize: 12, color: Colors.blue),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    if (_nearbyCyclists.length > 3)
+                      Center(
+                        child: Text(
+                          '+ ${_nearbyCyclists.length - 3} ${l10n?.more ?? 'more'}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[600],
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
         ],
       ),
-      // Add a FAB to edit the route name when creating a route
       floatingActionButton: _isCreatingRoute
           ? FloatingActionButton(
-              child: const Icon(Icons.edit),
               onPressed: () {
                 _mapService.showCustomRouteNameDialog(context);
               },
               tooltip: l10n?.editRouteName ?? 'Edit Route Name',
+              child: const Icon(Icons.edit),
             )
           : null,
     );

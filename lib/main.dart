@@ -26,7 +26,7 @@ class BicycGo extends StatefulWidget {
   final String? initialLanguageCode;
   final String? initialCountryCode;
   
-  const BicycGo({Key? key, this.initialLanguageCode, this.initialCountryCode}) : super(key: key);
+  const BicycGo({super.key, this.initialLanguageCode, this.initialCountryCode});
 
   @override
   State<BicycGo> createState() => _BicycGoState();
@@ -73,10 +73,10 @@ class MainScreen extends StatefulWidget {
   final Locale currentLocale;
   
   const MainScreen({
-    Key? key, 
+    super.key, 
     required this.onLocaleChanged, 
     required this.currentLocale
-  }) : super(key: key);
+  });
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -98,7 +98,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
     ];
 
-    void _onItemTapped(int index) {
+    void onItemTapped(int index) {
       setState(() {
         _selectedIndex = index;
       });
@@ -138,7 +138,7 @@ class _MainScreenState extends State<MainScreen> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
+        onTap: onItemTapped,
         type: BottomNavigationBarType.fixed,
       ),
     );

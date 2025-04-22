@@ -8,7 +8,7 @@ import '../l10n/app_localization.dart';
 class ARNavigationScreen extends StatefulWidget {
   final CyclingRoute route;
 
-  const ARNavigationScreen({Key? key, required this.route}) : super(key: key);
+  const ARNavigationScreen({super.key, required this.route});
 
   @override
   State<ARNavigationScreen> createState() => _ARNavigationScreenState();
@@ -125,7 +125,7 @@ class _ARNavigationScreenState extends State<ARNavigationScreen> {
       builder: (context) => AlertDialog(
         title: Text(l10n?.navigationComplete ?? 'Navigation Complete'),
         content: Text(
-          l10n?.reachedDestination?.replaceAll('{routeName}', widget.route.name) ?? 
+          l10n?.reachedDestination.replaceAll('{routeName}', widget.route.name) ?? 
           'You have reached your destination on ${widget.route.name}!'
         ),
         actions: [

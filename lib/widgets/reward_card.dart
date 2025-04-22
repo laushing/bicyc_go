@@ -5,10 +5,10 @@ class RewardCard extends StatelessWidget {
   final String points;
 
   const RewardCard({
-    Key? key,
+    super.key,
     required this.reward,
     required this.points,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
