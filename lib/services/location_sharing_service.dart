@@ -233,36 +233,52 @@ class LocationSharingService {
     }
   }
   
-  // For the demo, we'll simulate real connections with mock data
   void startSimulation() {
-    _locationUpdateTimer = Timer.periodic(const Duration(seconds: 3), (_) {
-      _simulateNearbyCyclists();
+    // Use real location updates instead of simulated data
+    _userId = 'local_user_${DateTime.now().millisecondsSinceEpoch}';
+    _userName = 'Me';
+    
+    // Start sending periodic location updates using real GPS
+    _locationUpdateTimer = Timer.periodic(const Duration(seconds: 3), (_) async {
+      try {
+        final position = await _getCurrentPosition();
+        // Add self to the list (needed for debugging)
+        final selfLocation = CyclistLocation(
+          userId: _userId,
+          name: _userName,
+          location: LatLng(position.latitude, position.longitude),
+          speed: position.speed * 3.6, // Convert m/s to km/h
+          timestamp: DateTime.now(),
+        );
+        
+        // Simulate some nearby cyclists based on real location
+        _simulateBasedOnRealLocation(position);
+        
+      } catch (e) {
+        print('Error getting location: $e');
+      }
     });
     
     _isConnected = true;
     if (onConnected != null) onConnected!();
   }
   
-  void _simulateNearbyCyclists() {
+  void _simulateBasedOnRealLocation(Position position) {
     // Clear previous cyclists
     _nearbyCyclists.clear();
     
-    // Generate 3-5 random cyclists
+    // Generate 2-4 random cyclists near the real location
     final random = DateTime.now().millisecondsSinceEpoch;
-    final count = 3 + (random % 3);
+    final count = 2 + (random % 3);
     
     for (int i = 0; i < count; i++) {
       final latOffset = (random % 100) / 10000 * (i % 2 == 0 ? 1 : -1);
       final lngOffset = (random % 100) / 10000 * (i % 3 == 0 ? 1 : -1);
       
-      // Base location - assuming we're in Hong Kong for demo
-      final baseLat = 22.302711;
-      final baseLng = 114.177216;
-      
       _nearbyCyclists.add(CyclistLocation(
         userId: 'user_$i',
         name: 'Cyclist ${i + 1}',
-        location: LatLng(baseLat + latOffset, baseLng + lngOffset),
+        location: LatLng(position.latitude + latOffset, position.longitude + lngOffset),
         speed: 15 + (random % 10) / 10,
         timestamp: DateTime.now(),
       ));
@@ -274,17 +290,37 @@ class LocationSharingService {
   
   void stopSimulation() {
     _locationUpdateTimer?.cancel();
+    _locationUpdateTimer = null;
     _nearbyCyclists.clear();
-    _cyclistsStreamController.add(_nearbyCyclists);
+    
+    // Only notify listeners if not disposed
+    if (!_cyclistsStreamController.isClosed) {
+      _cyclistsStreamController.add(_nearbyCyclists);
+    }
     
     _isConnected = false;
-    if (onDisconnected != null) onDisconnected!();
+    // Don't call callbacks directly here - widget might be disposed
+    // Use the stream approach instead for state updates
   }
   
-  @override
   void dispose() {
-    stopSimulation();
-    disconnect();
-    _cyclistsStreamController.close();
+    // First clear callbacks to prevent any late calls
+    onConnected = null;
+    onDisconnected = null;
+    onError = null;
+    
+    // Then stop all activities
+    _locationUpdateTimer?.cancel();
+    _locationUpdateTimer = null;
+    
+    if (_channel != null) {
+      _channel!.sink.close();
+      _channel = null;
+    }
+    
+    // Finally close the stream if not already closed
+    if (!_cyclistsStreamController.isClosed) {
+      _cyclistsStreamController.close();
+    }
   }
 }

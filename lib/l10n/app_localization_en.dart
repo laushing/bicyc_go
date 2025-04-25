@@ -146,5 +146,107 @@ class AppLocalizationsEn extends AppLocalizations {
   String get more => 'More';
 
   @override
+  String get grantPermission => 'Grant Permission';
+
+  @override
+  String get pleaseEnableLocation => 'Please enable location services to use this feature.';
+
+  @override
+  String get locationSharing => 'Location Sharing';
+
+  @override
+  String get enableLocationSharing => 'Enable Location Sharing';
+
+  @override
+  String get shareLocationWithOtherCyclists => 'Share your location with other cyclists';
+
+  @override
+  String get sharingRadius => 'Sharing Radius';
+
+  @override
+  String get autoJoinGroupRides => 'Auto Join Group Rides';
+
+  @override
+  String get automaticallyJoinRidesNearby => 'Automatically join group rides nearby';
+
+  @override
+  String get cyclingRewards => 'Cycling Rewards';
+
+  @override
+  String get yourPoints => 'Your Points';
+
+  @override
+  String get earnPointsPerKm => 'Earn {points} points per km';
+
+  @override
+  String get cyclingSessionActive => 'Cycling session active!';
+
+  @override
+  String get startCyclingToEarnPoints => 'Start cycling to earn points!';
+
+  @override
+  String get distance => 'Distance';
+
+  @override
+  String get distanceValue => 'Distance: {distance} km';
+
+  @override
+  String get duration => 'Duration';
+
+  @override
+  String get speed => 'Speed';
+
+  @override
+  String get maxSpeed => 'Max Speed';
+
+  @override
+  String get endSession => 'End Session';
+
+  @override
+  String get startCycling => 'Start Cycling';
+
+  @override
+  String get recentActivities => 'Recent Activities';
+
+  @override
+  String get pointsEarned => 'Points Earned';
+
+  @override
+  String get availableRewards => 'Available Rewards';
+
+  @override
+  String get errorOccurred => 'An error occurred! Please try again.';
+
+  @override
+  String get tryAgain => 'Try Again';
+
+  @override
+  String get noRewardsAvailable => 'No rewards available at the moment.';
+
+  @override
+  String get pointsCost => 'Points Cost';
+
+  @override
+  String get pointsLabel => 'Points';
+
+  @override
+  String get confirmRedemption => 'Are you sure you want to redeem this reward?';
+
+  @override
+  String get redeemConfirmation => 'Redeem Confirmation';
+
+  @override
+  String get redeem => 'Redeem';
+
+  @override
+  String get redeemSuccess => 'Reward redeemed successfully!';
+
+  @override
+  String get pointsDeducted => 'Points deducted: {points}';
+
+  @override
+  String get redeemFailed => 'Failed to redeem reward! Please try again.';
+
+  @override
   String get chineseTraditional => 'Chinese (Traditional)';
 }

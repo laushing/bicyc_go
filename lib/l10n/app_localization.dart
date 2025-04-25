@@ -125,6 +125,74 @@ abstract class AppLocalizations {
   String get locationSharingEnabled;
 
   String get more;
+
+  String get grantPermission;
+
+  String get pleaseEnableLocation;
+
+  String get locationSharing;
+
+  String get enableLocationSharing;
+
+  String get shareLocationWithOtherCyclists;
+
+  String get sharingRadius;
+
+  String get autoJoinGroupRides;
+
+  String get automaticallyJoinRidesNearby;
+
+  String get cyclingRewards;
+
+  String get yourPoints;
+
+  String get earnPointsPerKm;
+
+  String get cyclingSessionActive;
+
+  String get startCyclingToEarnPoints;
+
+  String get distance;
+
+  String get distanceValue;
+
+  String get duration;
+
+  String get speed;
+
+  String get maxSpeed;
+
+  String get endSession;
+
+  String get startCycling;
+
+  String get recentActivities;
+
+  String get pointsEarned;
+
+  String get availableRewards;
+
+  String get errorOccurred;
+
+  String get tryAgain;
+
+  String get noRewardsAvailable;
+
+  String get pointsCost;
+
+  String get pointsLabel;
+
+  String get confirmRedemption;
+
+  String get redeemConfirmation;
+
+  String get redeem;
+
+  String get redeemSuccess;
+
+  String get pointsDeducted;
+
+  String get redeemFailed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

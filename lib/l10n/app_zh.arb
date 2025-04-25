@@ -279,5 +279,255 @@
 
   "more": "更多",
   "@more": {
+  },
+
+  "grantPermissions": "請授予應用程序訪問位置的權限",
+  "@grantPermissions": {
+    "description": "請求用戶授予位置訪問權限的提示"
+  },
+
+  "pleaseEnableLocation": "請在設置中啟用位置服務",
+  "@pleaseEnableLocation": {
+    "description": "請求用戶啟用位置服務的提示"
+  },
+
+  "locationSharing": "位置共享",
+  "@locationSharing": {
+    "description": "位置共享的標籤"
+  },
+
+  "enableLocationSharing": "啟用位置共享",
+  "@enableLocationSharing": {
+    "description": "啟用位置共享的提示"
+  },
+
+  "shareLocationWithOtherCyclists": "與其他單車共享位置",
+  "@shareLocationWithOtherCyclists": {
+    "description": "與其他單車共享位置的提示"
+  },
+
+  "sharingRadius": "共享半徑：{radius}",
+  "@sharingRadius": {
+    "description": "位置共享的半徑",
+    "placeholders": {
+      "radius": {
+        "type": "String",
+        "example": "500 米"
+      }
+    }
+  },
+
+  "autoJoinGroupRides": "自動加入團體騎行",
+  "@autoJoinGroupRides": {
+    "description": "自動加入團體騎行的提示"
+  },
+
+  "automaticallyJoinRidesNearby": "自動加入附近的騎行",
+  "@automaticallyJoinRidesNearby": {
+    "description": "自動加入附近的騎行的提示"
+  },
+
+  "cyclingRewards": "單車獎勵",
+  "@cyclingRewards": {
+    "description": "單車獎勵的標籤"
+  },
+
+  "yourPoints": "您的積分：{points}",
+  "@yourPoints": {
+    "description": "顯示用戶的積分",
+    "placeholders": {
+      "points": {
+        "type": "int",
+        "example": "150"
+      }
+    }
+  },
+
+  "earnPointsPerKm": "每公里獲得積分：{points}",
+  "@earnPointsPerKm": {
+    "description": "每公里獲得的積分",
+    "placeholders": {
+      "points": {
+        "type": "int",
+        "example": "10"
+      }
+    }
+  },
+
+  "cyclingSessionActive": "單車紀錄進行中",
+  "@cyclingSessionActive": {
+    "description": "單車會話活躍的提示"
+  },
+
+  "startCyclingToEarnPoints": "開始騎行以獲得積分",
+  "@startCyclingToEarnPoints": {
+    "description": "開始騎行以獲得積分的提示"
+  },
+
+  "distance": "距離：{distance}",
+  "@distance": {
+    "description": "距離的顯示",
+    "placeholders": {
+      "distance": {
+        "type": "String",
+        "example": "10 公里"
+      }
+    }
+  },
+
+  "distanceValue": "距離：{value}",
+  "@distanceValue": {
+    "description": "距離的顯示",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "5.0"
+      }
+    }
+  },
+
+  "duration": "持續時間：{duration}",
+  "@duration": {
+    "description": "持續時間的顯示",
+    "placeholders": {
+      "duration": {
+        "type": "String",
+        "example": "30 分鐘"
+      }
+    }
+  },
+
+  "speed": "速度：{speed}",
+  "@speed": {
+    "description": "速度的顯示",
+    "placeholders": {
+      "speed": {
+        "type": "String",
+        "example": "20 公里/小時"
+      }
+    }
+  },
+
+  "maxSpeed": "最高速度：{maxSpeed}",
+  "@maxSpeed": {
+    "description": "最高速度的顯示",
+    "placeholders": {
+      "maxSpeed": {
+        "type": "String",
+        "example": "30 公里/小時"
+      }
+    }
+  },
+
+  "endSession": "結束會話",
+  "@endSession": {
+    "description": "結束會話的提示"
+  },
+
+  "startCycling": "開始騎行",
+  "@startCycling": {
+    "description": "開始騎行的提示"
+  },
+
+  "recentActivities": "最近的活動",
+  "@recentActivities": {
+    "description": "最近活動的標籤"
+  },
+
+  "pointsEarned": "獲得的積分：{points}",
+  "@pointsEarned": {
+    "description": "獲得的積分的顯示",
+    "placeholders": {
+      "points": {
+        "type": "int",
+        "example": "50"
+      }
+    }
+  },
+
+  "availabeRewards": "可用獎勵",
+  "@availabeRewards": {
+    "description": "可用獎勵的標籤"
+  },
+
+  "errorOccurred": "發生錯誤：{error}",
+  "@errorOccurred": {
+    "description": "發生錯誤的提示",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "無法連接到服務器"
+      }
+    }
+  },
+
+  "tryAgain": "請再試一次",
+  "@tryAgain": {
+    "description": "請再試一次的提示"
+  },
+
+  "noRewardsAvailable": "沒有可用的獎勵",
+  "@noRewardsAvailable": {
+    "description": "沒有可用獎勵的提示"
+  },
+
+  "pointsCost": "積分成本：{points}",
+  "@pointsCost": {
+    "description": "獎勵的積分成本",
+    "placeholders": {
+      "points": {
+        "type": "int",
+        "example": "100"
+      }
+    }
+  },
+
+  "pointsLabel": "積分",
+  "@pointsLabel": {
+    "description": "積分的標籤"
+  },
+
+  "confirmRedemption": "確認兌換",
+  "@confirmRedemption": {
+    "description": "確認兌換的提示"
+  },
+
+  "redeemConfirmation": "您確定要兌換此獎勵嗎？",
+  "@redeemConfirmation": {
+    "description": "兌換獎勵的確認提示"
+  },
+
+  "redeem": "兌換",
+  "@redeem": {
+    "description": "兌換的提示"
+  },
+
+  "redeemSuccess": "兌換成功！",
+  "@redeemSuccess": {
+    "description": "兌換成功的提示"
+  },
+
+  "pointsDeducted": "積分已扣除：{points}",
+  "@pointsDeducted": {
+    "description": "扣除的積分",
+    "placeholders": {
+      "points": {
+        "type": "int",
+        "example": "100"
+      }
+    }
+  },
+
+  "redeemFailed": "兌換失敗：{error}",
+  "@redeemFailed": {
+    "description": "兌換失敗的提示",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "網絡錯誤"
+      }
+    }
   }
+
+
 }

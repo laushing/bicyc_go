@@ -144,7 +144,108 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get more => '更多';
+
+  @override
+  String get grantPermission => '授予權限';
+
+  @override
+  String get pleaseEnableLocation => '請啟用位置服務以獲取最佳體驗。';
+
+  @override
+  String get locationSharing => '位置共享';
+
+  @override
+  String get enableLocationSharing => '啟用位置共享';
+
+  @override
+  String get shareLocationWithOtherCyclists => '與其他騎行者共享您的位置';
+
+  @override
+  String get sharingRadius => '共享半徑';
+
+  @override
+  String get autoJoinGroupRides => '自動加入團隊騎行';
+
+  @override
+  String get automaticallyJoinRidesNearby => '自動加入附近的團隊騎行';
   
+  @override
+  String get cyclingRewards => '騎行獎勵';
+
+  @override
+  String get yourPoints => '您的積分：{points}';
+
+  @override
+  String get earnPointsPerKm => '每公里獲得積分：{points}';
+
+  @override
+  String get cyclingSessionActive => '騎行紀錄已啟動！';
+
+  @override
+  String get startCyclingToEarnPoints => '開始騎行以獲得積分！';
+
+  @override
+  String get distance => '距離';
+
+  @override
+  String get distanceValue => '距離：{distance} 公里';
+
+  @override
+  String get duration => '持續時間';
+
+  @override
+  String get speed => '速度';
+
+  @override
+  String get maxSpeed => '最高速度';
+
+  @override
+  String get endSession => '結束騎行紀錄';
+
+  @override
+  String get startCycling => '開始騎行';
+
+  @override
+  String get recentActivities => '最近的活動';
+
+  @override
+  String get pointsEarned => '獲得的積分：{points}';
+
+  @override
+  String get availableRewards => '可用獎勵';
+
+  @override
+  String get errorOccurred => '發生錯誤！請稍後再試。';
+
+  @override
+  String get tryAgain => '請重試';
+
+  @override
+  String get noRewardsAvailable => '沒有可用的獎勵。';
+
+  @override
+  String get pointsCost => '積分成本：{points}';
+
+  @override
+  String get pointsLabel => '積分';
+
+  @override
+  String get confirmRedemption => '確認兌換';
+
+  @override
+  String get redeemConfirmation => '兌換';
+
+  @override
+  String get redeem => '兌換';
+
+  @override
+  String get redeemSuccess => '兌換成功！';
+
+  @override
+  String get pointsDeducted => '積分已扣除：{points}';
+
+  @override
+  String get redeemFailed => '兌換失敗！請稍後再試。';
 
   @override
   String get chineseTraditional => '中文（繁体）';

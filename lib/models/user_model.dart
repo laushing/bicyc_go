@@ -5,7 +5,7 @@ class User {
   int totalDistance;
   int achievementCount;
   String favoriteRoute;
-  final int rewardPoints;
+  late final int rewardPoints;
 
   User({
     required this.id,

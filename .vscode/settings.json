@@ -1,5 +1,9 @@
 {
-    "editor.quickSuggestions": false,
+    "editor.quickSuggestions": {
+        "comments": "off",
+        "strings": "off",
+        "other": "off"
+    },
     "flutterTools.displayGetxContextMenu": false,
     "flutterTools.displayMobxContextMenu": false,
     "flutterTools.displayRiverpodContextMenu": false,

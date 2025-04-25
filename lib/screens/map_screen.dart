@@ -45,19 +45,23 @@ class _MapScreenState extends State<MapScreen> {
     
     // Set up location sharing callbacks
     _locationSharingService.onConnected = () {
-      setState(() {
-        _isLocationSharingEnabled = true;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n?.locationSharingEnabled ?? 'Location sharing enabled')),
-      );
+      if (mounted) {
+        setState(() {
+          _isLocationSharingEnabled = true;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n?.locationSharingEnabled ?? 'Location sharing enabled')),
+        );
+      }
     };
     
     _locationSharingService.onDisconnected = () {
-      setState(() {
-        _isLocationSharingEnabled = false;
-        _nearbyCyclists = [];
-      });
+      if (mounted) {
+        setState(() {
+          _isLocationSharingEnabled = false;
+          _nearbyCyclists = [];
+        });
+      }
     };
     
     // Listen for cyclist updates

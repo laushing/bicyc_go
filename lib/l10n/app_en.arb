@@ -316,5 +316,210 @@
   "@more": {
     "description": "Text indicating there are more items not shown"
   },
-  "more": "More"
+  "more": "More",
+
+  "@grantPermissions": {
+    "description": "Prompt to grant permissions for location access"
+  },
+  "grantPermissions": "Please grant the app access to your location",
+
+  "@pleaseEnableLocation": {
+    "description": "Prompt to enable location services"
+  },
+  "pleaseEnableLocation": "Please enable location services in settings",
+
+  "@locationSharing": {
+    "description": "Label for location sharing feature"
+  },
+  "locationSharing": "Location Sharing",
+
+  "enableLocationSharing": "Enable Location Sharing",
+  "@enableLocationSharing": {
+    "description": "Prompt to enable location sharing"
+  },
+
+  "shareLocationWithOtherCyclists": "Share your location with other cyclists",
+  "@shareLocationWithOtherCyclists": {
+    "description": "Description of location sharing feature"
+  },
+
+  "sharingRadius": "Sharing Radius",
+  "@sharingRadius": {
+    "description": "Label for sharing radius setting"
+  },
+
+  "autoJoinGroupRides": "Auto Join Group Rides",
+  "@autoJoinGroupRides": {
+    "description": "Label for auto join group rides setting"
+  },
+
+  "automaticallyJoinRidesNearby": "Automatically join rides nearby",
+  "@automaticallyJoinRidesNearby": {
+    "description": "Description of auto join group rides feature"
+  },
+
+  "cyclingRewards": "Cycling Rewards",
+  "@cyclingRewards": {
+    "description": "Label for cycling rewards section"
+  },
+
+  "earnPointsPerKm": "Earn points per km",
+  "@earnPointsPerKm": {
+    "description": "Description of earning points per kilometer"
+  },
+
+  "cyclingSessionActive": "Cycling session active",
+  "@cyclingSessionActive": {
+    "description": "Message shown when a cycling session is active"
+  },
+
+  "yourPoints": "Your Points: {points}",
+  "@yourPoints": {
+    "description": "Display user's points",
+    "placeholders": {
+      "points": {
+        "type": "String",
+        "example": "100"
+      }
+    }
+  },
+
+  "startCyclingToEarnPoints": "Start cycling to earn points",
+  "@startCyclingToEarnPoints": {
+    "description": "Prompt to start cycling to earn points"
+  },
+
+  "distance": "Distance: {distance}",
+  "@distance": {
+    "description": "Display distance covered",
+    "placeholders": {
+      "distance": {
+        "type": "String",
+        "example": "5 km"
+      }
+    }
+  },
+
+  "distanceValue": "Distance Value",
+  "@distanceValue": {
+    "description": "Label for distance value"
+  },
+
+  "duration": "Duration",
+  "@duration": {
+    "description": "Label for duration of the cycling session"
+  },
+
+  "speed": "Speed",
+  "@speed": {
+    "description": "Label for speed during cycling"
+  },
+
+  "maxSpeed": "Max Speed",
+  "@maxSpeed": {
+    "description": "Label for maximum speed during cycling"
+  },
+
+  "endSession": "End Session",
+  "@endSession": {
+    "description": "Button text to end the cycling session"
+  },
+
+  "startCycling": "Start Cycling",
+  "@startCycling": {
+    "description": "Button text to start cycling"
+  },
+
+  "recentActivities": "Recent Activities",
+  "@recentActivities": {
+    "description": "Label for recent activities section"
+  },
+
+  "pointsEarned": "Points Earned: {points}",
+  "@pointsEarned": {
+    "description": "Display points earned in recent activities",
+    "placeholders": {
+      "points": {
+        "type": "String",
+        "example": "50"
+      }
+    }
+  },
+
+  "availableRewards": "Available Rewards",
+  "@availableRewards": {
+    "description": "Label for available rewards section"
+  },
+
+  "errorOccurred": "An error occurred",
+  "@errorOccurred": {
+    "description": "General error message"
+  },
+
+  "tryAgain": "Please try again",
+  "@tryAgain": {
+    "description": "Prompt to try again after an error"
+  },
+
+  "noRewardsAvailable": "No rewards available",
+  "@noRewardsAvailable": {
+    "description": "Message shown when no rewards are available"
+  },
+
+  "pointsCost": "Points Cost: {points}",
+  "@pointsCost": {
+    "description": "Display points cost for a reward",
+    "placeholders": {
+      "points": {
+        "type": "String",
+        "example": "100"
+      }
+    }
+  },
+
+  "pointsLabel": "Points",
+  "@pointsLabel": {
+    "description": "Label for points"
+  },
+
+  "confirmRedemption": "Confirm Redemption",
+  "@confirmRedemption": {
+    "description": "Prompt to confirm redemption of a reward"
+  },
+
+  "redeemConfirmation": "Are you sure you want to redeem this reward?",
+  "@redeemConfirmation": {
+    "description": "Confirmation message for redeeming a reward"
+  },
+
+  "redeem": "Redeem",
+  "@redeem": {
+    "description": "Button text to redeem a reward"
+  },
+
+  "redeemSuccess": "Redemption successful!",
+  "@redeemSuccess": {
+    "description": "Message shown when redemption is successful"
+  },
+
+  "pointsDeducted": "Points Deducted: {points}",
+  "@pointsDeducted": {
+    "description": "Display points deducted for a reward",
+    "placeholders": {
+      "points": {
+        "type": "String",
+        "example": "100"
+      }
+    }
+  },
+
+  "redeemFailed": "Redemption failed",
+  "@redeemFailed": {
+    "description": "Message shown when redemption fails"
+  }
+
+  
 }
+
+
+
