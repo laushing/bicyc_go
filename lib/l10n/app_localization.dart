@@ -120,7 +120,7 @@ abstract class AppLocalizations {
 
   String get continuesStraight;
 
-  String get nearbyCyclists;
+  String get nearbyCyclistsInfo;
 
   String get locationSharingEnabled;
 
@@ -237,6 +237,56 @@ abstract class AppLocalizations {
   String get myConnections;
 
   String get connectToSeeHere;
+
+  String get cyclingCommunications;
+  
+  String get messages;
+  
+  String get nearbyCyclists;
+  
+  String get noMessagesYet;
+  
+  String get noCyclistsNearby;
+  
+  String get createGroup;
+  
+  String get messageHint;
+  
+  String get shareRoute;
+  
+  String get activeNow;
+  
+  String get lastActive;
+  
+  String get findRealCyclists;
+  
+  String get realTimeChat;
+  
+  String get groupCycling;
+  
+  String get sendMessage;
+  
+  String get typeMessage;
+  
+  String get nearbyDistance;
+  
+  String get createCyclingGroup;
+  
+  String get groupInfo;
+  
+  String get inviteToRide;
+  
+  String get routeShared;
+  
+  String get viewProfile;
+  
+  String get joinGroupRide;
+
+  String get refresh;
+  
+  String get recentRides;
+  
+  String get rewardPoints;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

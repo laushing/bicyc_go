@@ -39,7 +39,7 @@ class User {
       id: json['id'],
       name: json['name'],
       photoUrl: json['photoUrl'],
-      totalDistance: json['totalDistance'] ?? 0,
+      totalDistance: (json['totalDistance'] ?? 0).toDouble(), // Fix type error by explicit conversion to double
       achievementCount: json['achievementCount'] ?? 0,
       favoriteRoute: json['favoriteRoute'],
       rewardPoints: json['rewardPoints'] ?? 0,

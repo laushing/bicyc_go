@@ -1,4 +1,3 @@
-//import 'package:intl/intl.dart' as intl;
 import 'app_localization.dart';
 
 class AppLocalizationsEn extends AppLocalizations {
@@ -10,7 +9,8 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get appTitle => 'BicycGo';
 
- @override
+  // Basic navigation items
+  @override
   String get dashboard => 'Dashboard';
   
   @override
@@ -28,8 +28,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get language => 'Language';
   
+  // Route planning
   @override
-  String get planRoute  => 'Plan Route';
+  String get planRoute => 'Plan Route';
   
   @override
   String get createCustomRoute => 'Create Custom Route';
@@ -44,7 +45,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addPoint => 'Add Point';
   
   @override
-  String get editRouteName  => 'Edit Route Name';
+  String get editRouteName => 'Edit Route Name';
   
   @override
   String get routeNameHint => 'Enter route name here';
@@ -106,6 +107,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get end => 'End';
 
+  // Navigation
   @override
   String get navigationComplete => 'Navigation Complete';
 
@@ -136,6 +138,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get continuesStraight => 'Continue straight';
 
+  // Location sharing and nearby cyclists
   @override
   String get nearbyCyclists => 'Nearby Cyclists';
 
@@ -169,6 +172,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get automaticallyJoinRidesNearby => 'Automatically join group rides nearby';
 
+  // Rewards
   @override
   String get cyclingRewards => 'Cycling Rewards';
 
@@ -248,6 +252,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get redeemFailed => 'Failed to redeem reward! Please try again.';
 
   @override
+  String get refresh => 'Refresh';
+  
+  @override
+  String get recentRides => 'Recent Rides';
+  
+  @override
+  String get rewardPoints => 'Reward Points';
+
+  // Profile and connections
+  @override
   String get cyclistProfile => 'Cyclist Profile';
 
   @override
@@ -315,4 +329,71 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chineseTraditional => 'Chinese (Traditional)';
+
+  // Messaging and communication features
+  @override
+  String get createGroup => 'Create Group';
+
+  @override
+  String get cyclingCommunications => 'Cycling Communications';
+  
+  @override
+  String get messages => 'Messages';
+  
+  @override
+  String get noMessagesYet => 'No messages yet';
+  
+  @override
+  String get noCyclistsNearby => 'No cyclists nearby';
+  
+  @override
+  String get messageHint => 'Type a message...';
+  
+  @override
+  String get shareRoute => 'Share Route';
+  
+  @override
+  String get activeNow => 'Active now';
+  
+  @override
+  String get lastActive => 'Last active';
+  
+  @override
+  String get findRealCyclists => 'Find Real Cyclists';
+  
+  @override
+  String get realTimeChat => 'Real-time Chat';
+  
+  @override
+  String get groupCycling => 'Group Cycling';
+  
+  @override
+  String get sendMessage => 'Send Message';
+  
+  @override
+  String get typeMessage => 'Type a message';
+  
+  @override
+  String get nearbyDistance => '{distance} km away';
+  
+  @override
+  String get createCyclingGroup => 'Create Cycling Group';
+  
+  @override
+  String get groupInfo => 'Group Info';
+  
+  @override
+  String get inviteToRide => 'Invite to Ride';
+  
+  @override
+  String get routeShared => 'Route shared';
+  
+  @override
+  String get viewProfile => 'View Profile';
+  
+  @override
+  String get joinGroupRide => 'Join Group Ride';
+
+  @override
+  String get nearbyCyclistsInfo => 'Nearby Cyclists Info';
 }

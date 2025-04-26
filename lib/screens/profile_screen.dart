@@ -7,6 +7,7 @@ import '../l10n/app_localization.dart';
 import 'connections_screen.dart';
 import 'connection_requests_screen.dart';
 import 'find_cyclists_screen.dart';
+import 'cyclist_messages_screen.dart';  // Import for messaging screen
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -74,7 +75,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
             label: l10n.favoriteRoute, 
             value: _user?.favoriteRoute ?? l10n.none
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
+          
+          // Add Button to communicate with other cyclists
+          ElevatedButton.icon(
+            icon: const Icon(Icons.message),
+            label: Text(l10n.cyclingCommunications),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            ),
+            onPressed: () {
+              if (_user != null) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CyclistMessagesScreen(currentUser: _user!),
+                  ),
+                );
+              }
+            },
+          ),
+          
+          const SizedBox(height: 20),
           
           // Social Connections Section
           Container(

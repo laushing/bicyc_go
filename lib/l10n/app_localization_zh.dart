@@ -315,4 +315,79 @@ class AppLocalizationsZh extends AppLocalizations {
   
   @override
   String get noSearchResults => '沒有找到匹配的騎行者';
+
+  @override
+  String get nearbyCyclistsInfo => '附近的騎行者';
+
+  @override
+  String get cyclingCommunications => '騎行者交流';
+  
+  @override
+  String get messages => '消息';
+  
+  @override
+  String get noMessagesYet => '暫無消息';
+  
+  @override
+  String get noCyclistsNearby => '附近沒有騎行者';
+  
+  @override
+  String get createGroup => '創建群組';
+  
+  @override
+  String get messageHint => '輸入消息...';
+  
+  @override
+  String get shareRoute => '分享路線';
+  
+  @override
+  String get activeNow => '當前在線';
+  
+  @override
+  String get lastActive => '上次活躍';
+  
+  @override
+  String get findRealCyclists => '尋找真實騎行者';
+  
+  @override
+  String get realTimeChat => '實時聊天';
+  
+  @override
+  String get groupCycling => '群組騎行';
+  
+  @override
+  String get sendMessage => '發送消息';
+  
+  @override
+  String get typeMessage => '輸入消息';
+  
+  @override
+  String get nearbyDistance => '距離：{distance} 公里';
+  
+  @override
+  String get createCyclingGroup => '創建騎行群組';
+  
+  @override
+  String get groupInfo => '群組信息';
+  
+  @override
+  String get inviteToRide => '邀請一起騎行';
+  
+  @override
+  String get routeShared => '路線已分享';
+  
+  @override
+  String get viewProfile => '查看資料';
+  
+  @override
+  String get joinGroupRide => '加入群組騎行';
+
+  @override
+  String get refresh => '刷新';
+  
+  @override
+  String get recentRides => '最近騎行';
+  
+  @override
+  String get rewardPoints => '獎勵積分';
 }
