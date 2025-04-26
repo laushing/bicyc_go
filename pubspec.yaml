@@ -23,12 +23,26 @@ dependencies:
   flutter_compass: ^0.8.0
   permission_handler: ^11.2.0
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/safe bicyclr logo.png"
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/safe bicyclr logo.png"
 
 flutter:
   uses-material-design: true
   generate: true
-
+  assets:
+    - assets/images/
+    - assets/icons/safe_bicycle_logo.png
