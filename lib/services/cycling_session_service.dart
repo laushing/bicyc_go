@@ -1,50 +1,47 @@
 import 'dart:async';
-import 'dart:collection';
-import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'location_service.dart';
-import 'rewards_service.dart';
+import 'package:flutter/foundation.dart';
+import 'package:latlong2/latlong.dart';
 import '../models/cycling_activity.dart';
 import '../models/user_model.dart';
+import '../services/location_service.dart';
+import '../services/rewards_service.dart';
 
 class CyclingSessionService {
-  // Singleton pattern
-  static final CyclingSessionService _instance = CyclingSessionService._internal();
-  factory CyclingSessionService() => _instance;
-  CyclingSessionService._internal();
-  
+  // Services
   final LocationService _locationService = LocationService();
   final RewardsService _rewardsService = RewardsService();
   
   // Session state
   bool _isSessionActive = false;
-  DateTime? _sessionStartTime;
-  Position? _lastPosition;
-  DateTime? _lastPositionTime;
+  bool get isSessionActive => _isSessionActive;
+  
+  // Session data
   double _totalDistance = 0.0;
   int _elapsedSeconds = 0;
   double _currentSpeed = 0.0;
   double _maxSpeed = 0.0;
-  
-  // Speed history for smoothing (recent speeds in km/h)
-  final Queue<double> _speedHistory = Queue<double>();
-  final int _speedHistoryMaxSize = 5; // Number of readings to use for smoothing
-  
-  // Speed zone analytics (time spent in different speed ranges)
-  final Map<String, int> _speedZones = {
-    '0-5 km/h': 0,
-    '5-10 km/h': 0,
-    '10-15 km/h': 0,
-    '15-20 km/h': 0,
-    '20+ km/h': 0,
+  DateTime? _startTime;
+  List<LatLng> _routePoints = [];
+  Map<String, int> _speedZones = {
+    'slow': 0,    // 0-10 km/h
+    'medium': 0,  // 10-20 km/h
+    'fast': 0,    // 20+ km/h
   };
-  int _lastSpeedZoneUpdate = 0; // Last time speed zones were updated
   
-  // Session data controllers
+  // Getters for session data
+  double get totalDistance => _totalDistance;
+  int get elapsedSeconds => _elapsedSeconds;
+  double get currentSpeed => _currentSpeed;
+  double get maxSpeed => _maxSpeed;
+  List<LatLng> get routePoints => List.unmodifiable(_routePoints);
+  Map<String, int> get speedZones => Map.unmodifiable(_speedZones);
+  
+  // Stream controllers
   final _distanceController = StreamController<double>.broadcast();
   final _durationController = StreamController<int>.broadcast();
   final _speedController = StreamController<double>.broadcast();
   final _maxSpeedController = StreamController<double>.broadcast();
+  final _routeController = StreamController<List<LatLng>>.broadcast();
   final _speedZonesController = StreamController<Map<String, int>>.broadcast();
   
   // Streams for UI updates
@@ -52,231 +49,210 @@ class CyclingSessionService {
   Stream<int> get durationStream => _durationController.stream;
   Stream<double> get speedStream => _speedController.stream;
   Stream<double> get maxSpeedStream => _maxSpeedController.stream;
+  Stream<List<LatLng>> get routeStream => _routeController.stream;
   Stream<Map<String, int>> get speedZonesStream => _speedZonesController.stream;
   
+  // Timers and subscriptions
   Timer? _durationTimer;
-  StreamSubscription<Position>? _locationSubscription;
-  
-  // Getters for current values
-  bool get isSessionActive => _isSessionActive;
-  double get totalDistance => _totalDistance;
-  int get elapsedSeconds => _elapsedSeconds;
-  double get currentSpeed => _currentSpeed;
-  double get maxSpeed => _maxSpeed;
-  Map<String, int> get speedZones => Map.unmodifiable(_speedZones);
-  String get formattedStartTime => _sessionStartTime != null ? 
-      '${_sessionStartTime!.hour.toString().padLeft(2, '0')}:${_sessionStartTime!.minute.toString().padLeft(2, '0')}' : '';
+  StreamSubscription? _locationSubscription;
+  LatLng? _lastLocation;
+  DateTime? _lastLocationTime;
   
   // Start a new cycling session
   Future<bool> startSession() async {
-    if (_isSessionActive) return true;
+    if (_isSessionActive) return true; // Already started
     
-    // Start tracking location
-    final trackingStarted = await _locationService.startTracking();
-    if (!trackingStarted) return false;
-    
-    // Reset session data
-    _sessionStartTime = DateTime.now();
-    _totalDistance = 0.0;
-    _elapsedSeconds = 0;
-    _currentSpeed = 0.0;
-    _maxSpeed = 0.0;
-    _speedHistory.clear();
-    _resetSpeedZones();
-    _lastPosition = await _locationService.getCurrentPosition();
-    _lastPositionTime = DateTime.now();
-    
-    // Start duration timer
-    _durationTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      _elapsedSeconds++;
-      _durationController.add(_elapsedSeconds);
+    try {
+      // Reset session data
+      _totalDistance = 0.0;
+      _elapsedSeconds = 0;
+      _currentSpeed = 0.0;
+      _maxSpeed = 0.0;
+      _routePoints = [];
+      _speedZones = {'slow': 0, 'medium': 0, 'fast': 0};
+      _startTime = DateTime.now();
+      _lastLocation = null;
+      _lastLocationTime = null;
       
-      // Update speed zones every second based on current speed
-      _updateSpeedZones(_currentSpeed);
-    });
-    
-    // Listen to location updates
-    _locationSubscription = _locationService.locationStream.listen((position) {
-      _updateSessionData(position);
-    });
-    
-    _isSessionActive = true;
-    return true;
-  }
-  
-  // Reset speed zones counters
-  void _resetSpeedZones() {
-    for (final key in _speedZones.keys) {
-      _speedZones[key] = 0;
-    }
-    _lastSpeedZoneUpdate = 0;
-  }
-  
-  // Update speed zones based on current speed
-  void _updateSpeedZones(double speedKmh) {
-    String zone;
-    if (speedKmh < 5) {
-      zone = '0-5 km/h';
-    } else if (speedKmh < 10) {
-      zone = '5-10 km/h';
-    } else if (speedKmh < 15) {
-      zone = '10-15 km/h';
-    } else if (speedKmh < 20) {
-      zone = '15-20 km/h';
-    } else {
-      zone = '20+ km/h';
-    }
-    
-    // Increment the appropriate zone counter by seconds since last update
-    final int secondsSinceLastUpdate = _elapsedSeconds - _lastSpeedZoneUpdate;
-    _speedZones[zone] = (_speedZones[zone] ?? 0) + secondsSinceLastUpdate;
-    _lastSpeedZoneUpdate = _elapsedSeconds;
-    
-    // Notify listeners
-    _speedZonesController.add(Map.from(_speedZones));
-  }
-  
-  // Update session data with new position
-  void _updateSessionData(Position newPosition) {
-    final now = DateTime.now();
-    
-    if (_lastPosition != null && _lastPositionTime != null) {
-      // Calculate distance increase
-      final distanceIncrease = _locationService.calculateDistance(
-        _lastPosition!,
-        newPosition,
+      // Start location updates
+      final locationStarted = await _locationService.startLocationUpdates();
+      if (!locationStarted) {
+        debugPrint('Failed to start location updates');
+        return false;
+      }
+      
+      // Start tracking duration
+      _durationTimer = Timer.periodic(const Duration(seconds: 1), _updateDuration);
+      
+      // Start tracking location
+      _locationSubscription = _locationService.locationStream?.listen(
+        _handleLocationUpdate,
+        onError: (error) {
+          debugPrint('Location error in cycling session: $error');
+        },
       );
       
-      // Update total distance
-      _totalDistance += distanceIncrease;
+      if (_locationSubscription == null) {
+        debugPrint('Failed to subscribe to location updates');
+        _durationTimer?.cancel();
+        return false;
+      }
+      
+      _isSessionActive = true;
+      return true;
+    } catch (e) {
+      debugPrint('Error starting cycling session: $e');
+      // Clean up any resources that might have been initialized
+      _durationTimer?.cancel();
+      _locationSubscription?.cancel();
+      _locationService.stopLocationUpdates();
+      return false;
+    }
+  }
+  
+  // End the current session and save activity
+  Future<CyclingActivity?> endSession(User user) async {
+    if (!_isSessionActive) return null;
+    
+    try {
+      // Stop timers and subscriptions safely
+      _durationTimer?.cancel();
+      _durationTimer = null;
+      
+      // Cancel location subscription first
+      await _locationSubscription?.cancel();
+      _locationSubscription = null;
+      
+      // Now we can stop location updates
+      _locationService.stopLocationUpdates();
+      
+      // Create a new activity with the session data
+      final points = _rewardsService.calculatePoints(_totalDistance);
+      
+      final activity = await _rewardsService.addCyclingActivity(
+        user.id,
+        _totalDistance,
+        points,
+      );
+      
+      _isSessionActive = false;
+      
+      // Clean up data but keep the last values for display
+      _startTime = null;
+      _routePoints = [];
+      
+      return activity;
+    } catch (e) {
+      debugPrint('Error ending cycling session: $e');
+      return null;
+    }
+  }
+  
+  // Cancel the session without saving
+  void cancelSession() {
+    _durationTimer?.cancel();
+    _durationTimer = null;
+    
+    // Cancel location subscription first before stopping the service
+    _locationSubscription?.cancel();
+    _locationSubscription = null;
+    
+    // Then stop location updates
+    _locationService.stopLocationUpdates();
+    
+    _isSessionActive = false;
+    _startTime = null;
+    _routePoints = [];
+  }
+  
+  // Format duration into HH:MM:SS
+  String formatDuration(int seconds) {
+    final hours = seconds ~/ 3600;
+    final minutes = (seconds % 3600) ~/ 60;
+    final remainingSeconds = seconds % 60;
+    
+    if (hours > 0) {
+      return '$hours:${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+    } else {
+      return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+    }
+  }
+  
+  // Private method to update duration
+  void _updateDuration(Timer timer) {
+    if (!_isSessionActive) return;
+    
+    _elapsedSeconds++;
+    _durationController.add(_elapsedSeconds);
+  }
+  
+  // Private method to handle location updates
+  void _handleLocationUpdate(LatLng location) {
+    if (!_isSessionActive) return;
+    
+    // Add the point to the route
+    _routePoints.add(location);
+    _routeController.add(_routePoints);
+    
+    // Calculate distance if we have a previous location
+    if (_lastLocation != null) {
+      final Distance distance = const Distance();
+      final double segmentDistance = distance.as(
+        LengthUnit.Kilometer,
+        _lastLocation!,
+        location,
+      );
+      
+      _totalDistance += segmentDistance;
       _distanceController.add(_totalDistance);
       
-      // Calculate instantaneous speed based on this update
-      final timeDelta = now.difference(_lastPositionTime!).inMilliseconds / 1000; // in seconds
-      if (timeDelta > 0) {
-        // Speed in km/h from the recent position change
-        final instantSpeed = (distanceIncrease / timeDelta) * 3600;
-        
-        // Add to history and maintain max size
-        _speedHistory.add(instantSpeed);
-        if (_speedHistory.length > _speedHistoryMaxSize) {
-          _speedHistory.removeFirst();
-        }
-        
-        // Calculate smoothed speed (average of recent readings)
-        if (_speedHistory.isNotEmpty) {
-          _currentSpeed = _speedHistory.reduce((a, b) => a + b) / _speedHistory.length;
+      // Calculate speed if we have a previous timestamp
+      if (_lastLocationTime != null) {
+        final double timeDeltaHours = DateTime.now().difference(_lastLocationTime!).inMilliseconds / 3600000;
+        if (timeDeltaHours > 0) {
+          _currentSpeed = segmentDistance / timeDeltaHours;
+          _speedController.add(_currentSpeed);
           
-          // Update max speed if needed
+          // Update max speed
           if (_currentSpeed > _maxSpeed) {
             _maxSpeed = _currentSpeed;
             _maxSpeedController.add(_maxSpeed);
           }
           
-          // Notify speed listeners
-          _speedController.add(_currentSpeed);
+          // Update speed zones
+          String zone;
+          if (_currentSpeed < 10) {
+            zone = 'slow';
+          } else if (_currentSpeed < 20) {
+            zone = 'medium';
+          } else {
+            zone = 'fast';
+          }
+          
+          _speedZones[zone] = (_speedZones[zone] ?? 0) + 1;
+          _speedZonesController.add(_speedZones);
         }
       }
     }
     
-    _lastPosition = newPosition;
-    _lastPositionTime = now;
+    // Update previous location and time
+    _lastLocation = location;
+    _lastLocationTime = DateTime.now();
   }
   
-  // Get a summary of speed analytics
-  Map<String, dynamic> getSpeedAnalytics() {
-    // Calculate average speed
-    final avgSpeed = _elapsedSeconds > 0 ? (_totalDistance / _elapsedSeconds) * 3600 : 0;
-    
-    // Calculate percentage time in each speed zone
-    final Map<String, double> zonePercentages = {};
-    if (_elapsedSeconds > 0) {
-      for (final entry in _speedZones.entries) {
-        zonePercentages[entry.key] = (entry.value / _elapsedSeconds) * 100;
-      }
-    }
-    
-    return {
-      'currentSpeed': _currentSpeed,
-      'maxSpeed': _maxSpeed,
-      'avgSpeed': avgSpeed,
-      'speedZones': Map.from(_speedZones),
-      'zonePercentages': zonePercentages,
-    };
-  }
-  
-  // End the current session and calculate rewards
-  Future<CyclingActivity?> endSession(User user) async {
-    if (!_isSessionActive) return null;
-    
-    // Stop tracking
-    _locationService.stopTracking();
-    _durationTimer?.cancel();
-    _locationSubscription?.cancel();
-    
-    _isSessionActive = false;
-    
-    // Calculate points
-    final pointsEarned = _rewardsService.calculatePoints(_totalDistance);
-    
-    // Save activity
-    final activity = await _rewardsService.addCyclingActivity(
-      user.id,
-      _totalDistance,
-      pointsEarned,
-    );
-    
-    // Update user points
-    if (activity != null) {
-      user.rewardPoints += pointsEarned;
-    }
-    
-    return activity;
-  }
-  
-  // Cancel current session without saving
-  void cancelSession() {
-    if (!_isSessionActive) return;
-    
-    _locationService.stopTracking();
-    _durationTimer?.cancel();
-    _locationSubscription?.cancel();
-    
-    _isSessionActive = false;
-    _totalDistance = 0.0;
-    _elapsedSeconds = 0;
-    _currentSpeed = 0.0;
-    _maxSpeed = 0.0;
-    _speedHistory.clear();
-    _resetSpeedZones();
-  }
-  
-  // Format seconds to MM:SS
-  String formatDuration(int seconds) {
-    final minutes = (seconds / 60).floor();
-    final remainingSeconds = seconds % 60;
-    return '$minutes:${remainingSeconds.toString().padLeft(2, '0')}';
-  }
-  
-  // Get session summary with enhanced speed data
-  Map<String, dynamic> getSessionSummary() {
-    return {
-      'distance': _totalDistance,
-      'duration': _elapsedSeconds,
-      'currentSpeed': _currentSpeed,
-      'maxSpeed': _maxSpeed,
-      'avgSpeed': _elapsedSeconds > 0 ? (_totalDistance / _elapsedSeconds) * 3600 : 0,
-      'startTime': _sessionStartTime,
-      'speedZones': Map.from(_speedZones),
-    };
-  }
-  
+  // Clean up resources when the service is no longer needed
   void dispose() {
-    // Only close the streams, don't cancel the session
+    // Cancel any active session first
+    if (_isSessionActive) {
+      cancelSession();
+    }
+    
+    // Clean up controllers
     _distanceController.close();
     _durationController.close();
     _speedController.close();
     _maxSpeedController.close();
+    _routeController.close();
     _speedZonesController.close();
   }
 }
