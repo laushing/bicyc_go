@@ -351,19 +351,32 @@ class _RewardsScreenState extends State<RewardsScreen> {
                     color: Colors.amber.shade100,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Text(
-                    l10n.yourPoints.replaceFirst('{points}', _currentUser.rewardPoints.toString()),
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amber,
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '${_currentUser.rewardPoints} ',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.amber,
+                        ),
+                      ),
+                      Text(
+                        l10n.pointsLabel,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.amber,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
 
                 const SizedBox(height: 10),
                 Text(
-                  l10n.earnPointsPerKm,
+                  l10n.earnPointsPerKm.replaceFirst('{points}', '10'),
                   style: const TextStyle(fontSize: 16),
                 ),
 
@@ -525,7 +538,10 @@ class _RewardsScreenState extends State<RewardsScreen> {
                                   children: [
                                     Icon(Icons.star, color: Colors.amber, size: 16),
                                     const SizedBox(width: 4),
-                                    Text('${l10n.pointsEarned}: ${activity.pointsEarned}'),
+                                    Text(
+                                      '${activity.pointsEarned} ${l10n.pointsLabel}',
+                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                    ),
                                   ],
                                 ),
                                 const SizedBox(height: 4),

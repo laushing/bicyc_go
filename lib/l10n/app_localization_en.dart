@@ -248,5 +248,71 @@ class AppLocalizationsEn extends AppLocalizations {
   String get redeemFailed => 'Failed to redeem reward! Please try again.';
 
   @override
+  String get cyclistProfile => 'Cyclist Profile';
+
+  @override
+  String get connectWithCyclists => 'Connect with other cyclists';
+
+  @override
+  String get totalDistance => 'Total Distance: {distance} km';
+
+  @override
+  String get achievements => 'Achievements';
+
+  @override
+  String get badges => 'Badge';
+
+  @override
+  String get none => 'None';
+
+  @override
+  String get favoriteRoute => 'Favourite Routes';
+
+  @override
+  String get cyclingConnections => 'Cycling Connections';
+
+  @override
+  String get connections => 'Connections';
+
+  @override
+  String get requests => 'Requests';
+
+  @override
+  String get findCyclists => 'Find Cyclists';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get connectionRequests => 'Connection Requests';
+
+  @override
+  String get noConnectionRequests => 'No connection requests available.';
+
+  @override
+  String get nowConnectedWith => 'You are now connected with {name}!';
+
+  @override
+  String get requestSentTo => 'Connection request sent to {name}.';
+
+  @override
+  String get searchCyclists => 'Search Cyclists';
+
+  @override
+  String get noSearchResults => 'No search results found.';
+
+  @override
+  String get noConnectionsYet => 'No connections yet.';
+
+  @override
+  String get connect => 'Connect';
+
+  @override
+  String get myConnections => 'My Connections';
+
+  @override
+  String get connectToSeeHere => 'Connect with other cyclists to see their activities here.';
+
+  @override
   String get chineseTraditional => 'Chinese (Traditional)';
 }

@@ -44,7 +44,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     // Update the user object
     widget.user.name = _nameController.text;
     widget.user.favoriteRoute = _favoriteRouteController.text;
-    widget.user.totalDistance = int.tryParse(_distanceController.text) ?? 0;
+    widget.user.totalDistance = (int.tryParse(_distanceController.text) ?? 0).toDouble();
     widget.user.achievementCount = int.tryParse(_achievementsController.text) ?? 0;
 
     // Save to storage

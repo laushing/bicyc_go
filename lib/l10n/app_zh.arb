@@ -527,6 +527,134 @@
         "example": "網絡錯誤"
       }
     }
+  },
+
+  "cyclistProfile": "單車手檔案",
+  "@cyclistProfile": {
+    "description": "單車手檔案的標籤"
+  },
+
+  "connectWithCyclists": "與其他單車手聯繫",
+  "@connectWithCyclists": {
+    "description": "與其他單車手聯繫的提示"
+  },
+
+  "totalDistance": "總距離：{distance}",
+  "@totalDistance": {
+    "description": "總距離的顯示",
+    "placeholders": {
+      "distance": {
+        "type": "String",
+        "example": "100 公里"
+      }
+    }
+  },
+
+  "achievements": "成就",
+  "@achievements": {
+    "description": "成就的標籤"
+  },
+
+  "badges": "徽章",
+  "@badges": {
+    "description": "徽章的標籤"
+  },
+
+  "none": "無",
+  "@none": {
+    "description": "無的標籤"
+  },
+
+  "favoriteRoute": "最愛路線",
+  "@favoriteRoute": {
+    "description": "最愛路線的標籤"
+  },
+
+  "cyclingConnections": "單車手連接",
+  "@cyclingConnections": {
+    "description": "單車連接的標籤"
+  },
+
+  "connections": "連接",
+  "@connections": {
+    "description": "連接的標籤"
+  },
+
+  "requests": "請求",
+  "@requests": {
+    "description": "請求的標籤"
+  },
+
+  "findCyclists": "尋找單車手",
+  "@findCyclists": {
+    "description": "尋找單車手的提示"
+  },
+
+  "editProfile": "編輯檔案",
+  "@editProfile": {
+    "description": "編輯檔案的提示"
+  },
+
+  "connectionRequests": "連接請求",
+  "@connectionRequests": {
+    "description": "連接請求的標籤"
+  },
+
+  "noConnectionRequests": "沒有連接請求",
+  "@noConnectionRequests": {
+    "description": "沒有連接請求的提示"
+  },
+
+  "nowConnectedWith": "現在與 {name} 連接",
+  "@nowConnectedWith": {
+    "description": "與單車手連接的提示",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "John Doe"
+      }
+    }
+  },
+
+  "requestSentTo": "請求已發送給 {name}",
+  "@requestSentTo": {
+    "description": "請求已發送給單車手的提示",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Jane Smith"
+      }
+    }
+  },
+
+  "searchCyclists": "搜索單車手",
+  "@searchCyclists": {
+    "description": "搜索單車手的提示"
+  },
+
+  "noSearchResults": "沒有搜索結果",
+  "@noSearchResults": {
+    "description": "沒有搜索結果的提示"
+  },
+
+  "noConnectionsYet": "尚未建立連接",
+  "@noConnectionsYet": {
+    "description": "尚未建立連接的提示"
+  },
+
+  "connect": "連接",
+  "@connect": {
+    "description": "連接的提示"
+  },
+
+  "myConnections": "我的連接",
+  "@myConnections": {
+    "description": "我的連接的標籤"
+  },
+
+  "connectToSeeHere": "連接以查看這裡的內容",
+  "@connectToSeeHere": {
+    "description": "連接以查看這裡的內容的提示"
   }
 
 

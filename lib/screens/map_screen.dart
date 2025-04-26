@@ -235,12 +235,13 @@ class _MapScreenState extends State<MapScreen> {
       difficulty: 'custom',
       coordinates: _customRoutePoints,
       imageUrl: 'assets/images/custom_route.jpg',
+      isCustom: true,  // Mark as a custom route so we know to display waypoint numbers
     );
 
     setState(() {
       _availableRoutes.add(newRoute);
       _isCreatingRoute = false;
-      _customRoutePoints.clear();
+      _selectedRoute = newRoute;  // Set as selected route immediately
     });
     
     // Save the updated routes list
@@ -256,7 +257,8 @@ class _MapScreenState extends State<MapScreen> {
       }
     });
 
-    _selectRoute(newRoute);
+    // Focus map on the new route with waypoint numbers displayed
+    _mapService.focusOnRoute(newRoute, showWaypointNumbers: true);
   }
   
   void _deleteRoute(String routeId) {
@@ -291,7 +293,8 @@ class _MapScreenState extends State<MapScreen> {
       _selectedRoute = route; // Store the selected route
     });
     
-    _mapService.focusOnRoute(route);
+    // Show waypoint numbers for custom routes
+    _mapService.focusOnRoute(route, showWaypointNumbers: route.isCustom == true);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -334,7 +337,7 @@ class _MapScreenState extends State<MapScreen> {
                   customRoutePoints: _isCreatingRoute ? _customRoutePoints : null,
                   selectedRoute: _selectedRoute,
                   mapContext: context,
-                  // Remove the nearbyCyclists parameter as it is not defined
+                  showWaypointNumbers: _selectedRoute?.isCustom == true,  // Show numbered waypoints for custom routes
                   onTap: _isCreatingRoute
                       ? (LatLng coords) {
                           _addWaypoint(coords.latitude, coords.longitude);

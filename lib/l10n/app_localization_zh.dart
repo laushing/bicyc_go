@@ -250,4 +250,69 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get chineseTraditional => '中文（繁体）';
 
+  @override
+  String get cyclistProfile => '騎行者檔案';
+
+  @override
+  String get connectWithCyclists => '與香港其他騎行者建立聯繫';
+
+  @override
+  String get totalDistance => '總騎行距離';
+
+  @override
+  String get achievements => '成就';
+
+  @override
+  String get favoriteRoute => '最喜愛的路線';
+
+  @override
+  String get editProfile => '編輯檔案';
+
+  @override
+  String get none => '無';
+
+  @override
+  String get badges => '徽章';
+
+  @override
+  String get cyclingConnections => '騎行社交圈';
+
+  @override
+  String get connections => '連接';
+
+  @override
+  String get requests => '請求';
+
+  @override
+  String get findCyclists => '尋找騎行者';
+
+  @override
+  String get noConnectionsYet => '還沒有連接';
+
+  @override
+  String get connectToSeeHere => '連接其他騎行者以在此處查看';
+
+  @override
+  String get noConnectionRequests => '沒有連接請求';
+
+  @override
+  String get connectionRequests => '連接請求';
+
+  @override
+  String get myConnections => '我的連接';
+
+  @override
+  String get connect => '連接';
+
+  @override
+  String get nowConnectedWith => '您現在已與 {name} 連接';
+
+  @override
+  String get requestSentTo => '連接請求已發送給 {name}';
+  
+  @override
+  String get searchCyclists => '搜索騎行者';
+  
+  @override
+  String get noSearchResults => '沒有找到匹配的騎行者';
 }

@@ -193,6 +193,50 @@ abstract class AppLocalizations {
   String get pointsDeducted;
 
   String get redeemFailed;
+
+  String get cyclistProfile;
+
+  String get connectWithCyclists;
+
+  String get totalDistance;
+
+  String get achievements;
+
+  String get badges;
+
+  String get none;
+
+  String get favoriteRoute;
+
+  String get cyclingConnections;
+
+  String get connections;
+
+  String get requests;
+
+  String get findCyclists;
+
+  String get editProfile;
+
+  String get connectionRequests;
+
+  String get noConnectionRequests;
+
+  String get nowConnectedWith;
+
+  String get requestSentTo;
+
+  String get searchCyclists;
+
+  String get noSearchResults;
+
+  String get noConnectionsYet;
+
+  String get connect;
+
+  String get myConnections;
+
+  String get connectToSeeHere;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

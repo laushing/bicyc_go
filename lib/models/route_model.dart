@@ -7,6 +7,7 @@ class CyclingRoute {
   final String difficulty;
   final List<List<double>> coordinates;
   final String imageUrl;
+  final bool? isCustom; // Added this property
 
   CyclingRoute({
     required this.id,
@@ -17,6 +18,7 @@ class CyclingRoute {
     required this.difficulty,
     required this.coordinates,
     required this.imageUrl,
+    this.isCustom, // New optional parameter
   });
 
   // Add methods for JSON serialization
@@ -30,6 +32,7 @@ class CyclingRoute {
       'difficulty': difficulty,
       'coordinates': coordinates,
       'imageUrl': imageUrl,
+      'isCustom': isCustom, // Added this field
     };
   }
 
@@ -46,6 +49,7 @@ class CyclingRoute {
           .map((coordList) => (coordList as List).cast<double>())
           .toList(),
       imageUrl: json['imageUrl'],
+      isCustom: json['isCustom'], // Added this field
     );
   }
 }

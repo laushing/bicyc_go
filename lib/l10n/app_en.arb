@@ -516,6 +516,134 @@
   "redeemFailed": "Redemption failed",
   "@redeemFailed": {
     "description": "Message shown when redemption fails"
+  },
+
+  "cyclistProfile": "Cyclist Profile",
+  "@cyclistProfile": {
+    "description": "Label for cyclist profile section"
+  },
+
+  "connectWithCyclists": "Connect with other cyclists",
+  "@connectWithCyclists": {
+    "description": "Prompt to connect with other cyclists"
+  },
+
+  "totalDistance": "Total Distance: {distance}",
+  "@totalDistance": {
+    "description": "Display total distance covered",
+    "placeholders": {
+      "distance": {
+        "type": "String",
+        "example": "100 km"
+      }
+    }
+  },
+
+  "achievements": "Achievements",
+  "@achievements": {
+    "description": "Label for achievements section"
+  },
+
+  "badges": "Badges",
+  "@badges": {
+    "description": "Label for badges section"
+  },
+
+  "none": "None",
+  "@none": {
+    "description": "Label for no achievements or badges"
+  },
+
+  "favoriteRoutes": "Favorite Routes",
+  "@favoriteRoutes": {
+    "description": "Label for favorite routes section"
+  },
+
+  "cyclingConnections": "Cycling Connections",
+  "@cyclingConnections": {
+    "description": "Label for cycling connections section"
+  },
+
+  "connections": "Connections",
+  "@connections": {
+    "description": "Label for connections section"
+  },
+
+  "requests": "Requests",
+  "@requests": {
+    "description": "Label for requests section"
+  },
+
+  "findCyclists": "Find Cyclists",
+  "@findCyclists": {
+    "description": "Label for finding cyclists section"
+  },
+
+  "editProfile": "Edit Profile",
+  "@editProfile": {
+    "description": "Button text to edit profile"
+  },
+
+  "connectionRequests": "Connection Requests",
+  "@connectionRequests": {
+    "description": "Label for connection requests section"
+  },
+
+  "noConnectionRequests": "No connection requests",
+  "@noConnectionRequests": {
+    "description": "Message shown when there are no connection requests"
+  },
+
+  "nowConnectedWith": "Now connected with {name}",
+  "@nowConnectedWith": {
+    "description": "Message shown when connected with another cyclist",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "John Doe"
+      }
+    }
+  },
+
+  "requestSentTo": "Request sent to {name}",
+  "@requestSentTo": {
+    "description": "Message shown when a connection request is sent",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Jane Smith"
+      }
+    }
+  },
+
+  "searchCyclists": "Search Cyclists",
+  "@searchCyclists": {
+    "description": "Label for searching cyclists section"
+  },
+
+  "noSearchResults": "No search results",
+  "@noSearchResults": {
+    "description": "Message shown when no search results are found"
+  },
+
+  "noConnections": "No connections",
+  "@noConnections": {
+    "description": "Message shown when there are no connections"
+  },
+
+  "connect": "Connect",
+  "@connect": {
+    "description": "Button text to connect with another cyclist"
+  },
+
+  "myConnections": "My Connections",
+  "@myConnections": {
+    "description": "Label for my connections section"
+  },
+
+  "connectToSeeHere": "Connect with other cyclists to see their activities",
+  "@connectToSeeHere": {
+    "description": "Prompt to connect with other cyclists to see their activities"
   }
 
   

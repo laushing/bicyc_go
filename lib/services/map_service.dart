@@ -255,15 +255,13 @@ class MapService {
   Widget buildMap({
     required List<CyclingRoute> routes,
     List<List<double>>? customRoutePoints,
-    String? customRouteName,
-    CyclingRoute? selectedRoute, // Add this parameter
-    LatLng? initialPosition,
-    double initialZoom = 13.0,
+    CyclingRoute? selectedRoute,
+    required BuildContext mapContext,
+    bool showWaypointNumbers = false,  // Add this parameter
     Function(LatLng)? onTap,
-    BuildContext? mapContext,
   }) {
     // Use the provided name or the stored name
-    final routeName = customRouteName ?? _customRouteName;
+    final routeName = _customRouteName;
     
     // Print debug info to check if custom route is being passed correctly
     if (customRoutePoints != null) {
@@ -271,7 +269,7 @@ class MapService {
     }
     
     // Default to Hong Kong if no position provided
-    final center = initialPosition ?? LatLng(22.302711, 114.177216);
+    final center = LatLng(22.302711, 114.177216);
     
     // Make sure polylines are created correctly
     List<Polyline> allPolylines = [
@@ -295,7 +293,7 @@ class MapService {
       mapController: mapController,
       options: MapOptions(
         center: center,
-        zoom: initialZoom,
+        zoom: 13.0,
         interactiveFlags: InteractiveFlag.all,
         onTap: (tapPosition, latLng) async {
           print("Map tapped at: $latLng"); // Add logging
@@ -498,7 +496,7 @@ class MapService {
   }
   
   // Focus map on a specific route
-  void focusOnRoute(CyclingRoute route) {
+  void focusOnRoute(CyclingRoute route, {bool showWaypointNumbers = false}) {
     final points = _convertCoordinatesToLatLng(route.coordinates);
     if (points.isNotEmpty) {
       mapController.move(points.first, 15.0);
