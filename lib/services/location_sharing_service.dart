@@ -69,28 +69,31 @@ class LocationSharingService {
       _userId = userId;
       _userName = userName;
       
-      // Connect to WebSocket server (replace with your actual server URL)
-      final wsUrl = 'wss://bicycgo-api.example.com/location-sharing/$userId';
+      // Connect to a public WebSocket Echo server to demonstrate WebSocketChannel usage
+      final wsUrl = 'wss://echo.websocket.events'; 
       _channel = WebSocketChannel.connect(Uri.parse(wsUrl));
-      _isConnected = true;
-      
+      _isConnected = true; // Assuming connection succeeds
+
       if (onConnected != null) onConnected!();
-      
-      // Listen for messages from the server
+
       _channel!.stream.listen(
         (message) {
-          final data = jsonDecode(message);
-          _handleMessage(data);
+          // Handle the echo message (it's just what you sent)
+          print("Received echo: $message"); 
+          // !! You won't get 'cyclists_update' here !!
+          // final data = jsonDecode(message); 
+          // _handleMessage(data); // This won't work as expected
         },
         onDone: _handleDisconnect,
         onError: (error) {
           _isConnected = false;
           if (onError != null) onError!(error.toString());
+          _handleDisconnect(); // Also handle disconnect on error
         }
       );
       
-      // Start sending location updates
-      _startLocationUpdates();
+      // You can still try sending location updates, they will just be echoed back
+      _startLocationUpdates(); 
       
     } catch (e) {
       _isConnected = false;
@@ -115,19 +118,8 @@ class LocationSharingService {
   }
   
   void _handleMessage(Map<String, dynamic> data) {
-    final messageType = data['type'];
-    
-    switch (messageType) {
-      case 'cyclists_update':
-        _updateCyclistsList(data['cyclists']);
-        break;
-      case 'join_group_ride':
-        // Handle joining a group ride
-        break;
-      case 'leave_group_ride':
-        // Handle leaving a group ride
-        break;
-    }
+    print("Handling echo data (if decoded): $data");
+    // The logic for 'cyclists_update' etc. will never run
   }
   
   void _updateCyclistsList(List<dynamic> cyclists) {
@@ -184,19 +176,19 @@ class LocationSharingService {
   }
   
   void _sendLocationUpdate(Position position) {
-    if (_channel != null && _isConnected) {
-      final locationData = {
-        'type': 'location_update',
-        'userId': _userId,
-        'name': _userName,
-        'latitude': position.latitude,
-        'longitude': position.longitude,
-        'speed': position.speed,
-        'timestamp': DateTime.now().toIso8601String(),
-      };
-      
-      _channel!.sink.add(jsonEncode(locationData));
-    }
+    if (!_isConnected || _channel == null) return;
+
+    final locationData = {
+      'type': 'location_update',
+      'userId': _userId,
+      'name': _userName,
+      'latitude': position.latitude,
+      'longitude': position.longitude,
+      'speed': position.speed,
+      'timestamp': DateTime.now().toIso8601String(),
+    };
+    print("Sending to echo server: ${jsonEncode(locationData)}");
+    _channel!.sink.add(jsonEncode(locationData));
   }
   
   // Create or join a group ride
