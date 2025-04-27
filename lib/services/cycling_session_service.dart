@@ -190,6 +190,8 @@ class CyclingSessionService {
   void _handleLocationUpdate(LatLng location) {
     if (!_isSessionActive) return;
     
+    debugPrint('Received location update: ${location.latitude}, ${location.longitude}'); // Added debug print
+    
     // Add the point to the route
     _routePoints.add(location);
     _routeController.add(_routePoints);
@@ -203,14 +205,21 @@ class CyclingSessionService {
         location,
       );
       
+      debugPrint('Calculated segment distance: $segmentDistance km'); // Added debug print
+      
       _totalDistance += segmentDistance;
       _distanceController.add(_totalDistance);
       
       // Calculate speed if we have a previous timestamp
       if (_lastLocationTime != null) {
-        final double timeDeltaHours = DateTime.now().difference(_lastLocationTime!).inMilliseconds / 3600000;
+        final double timeDeltaMillis = DateTime.now().difference(_lastLocationTime!).inMilliseconds.toDouble();
+        final double timeDeltaHours = timeDeltaMillis / 3600000.0;
+        
+        debugPrint('Time delta: $timeDeltaMillis ms ($timeDeltaHours hours)'); // Added debug print
+        
         if (timeDeltaHours > 0) {
           _currentSpeed = segmentDistance / timeDeltaHours;
+          debugPrint('Calculated current speed: $_currentSpeed km/h'); // Added debug print
           _speedController.add(_currentSpeed);
           
           // Update max speed
@@ -231,8 +240,14 @@ class CyclingSessionService {
           
           _speedZones[zone] = (_speedZones[zone] ?? 0) + 1;
           _speedZonesController.add(_speedZones);
+        } else {
+          debugPrint('Time delta is zero or negative, cannot calculate speed.'); // Added debug print
         }
+      } else {
+         debugPrint('Last location time is null, cannot calculate speed yet.'); // Added debug print
       }
+    } else {
+       debugPrint('First location update, cannot calculate distance/speed yet.'); // Added debug print
     }
     
     // Update previous location and time
