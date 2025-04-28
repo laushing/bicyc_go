@@ -390,4 +390,61 @@ class AppLocalizationsZh extends AppLocalizations {
   
   @override
   String get rewardPoints => '獎勵積分';
+
+  @override
+  String get security => '安全性';
+
+  @override
+  String get enableFingerprintAuth => '啟用指紋身份驗證';
+
+  @override
+  String get useFingerprintToSecure => '使用指紋來保護您的應用程序';
+
+  @override
+  String get fingerprintAuthReason => '請使用指紋來解鎖應用程序。';
+
+  @override
+  String get fingerprintAuthError => '指紋身份驗證失敗！請重試。';
+
+  @override
+  String get biometricsNotAvailable => '生物識別技術不可用。請檢查您的設備設置。';
+
+  @override
+  String get fingerprintEnabled => '指紋身份驗證已啟用！';
+
+  @override
+  String get authenticating => '正在身份驗證...';
+
+  @override
+  String get cyclingForum => '騎行論壇';
+
+  @override
+  String get writeNewPost => '撰寫新帖子';
+
+  @override
+  String get general => '一般';
+
+  @override
+  String get routeTips => '路線提示';
+
+  @override
+  String get equipment => '設備';
+
+  @override
+  String get events => '活動';
+
+  @override
+  String get noPostsYet => '暫無帖子';
+
+  @override
+  String get likes => '喜歡';
+
+  @override
+  String get comments => '評論';
+
+  @override
+  String get share => '分享';
+
+  @override
+  String get post => '發帖';
 }

@@ -8,6 +8,7 @@ import 'connections_screen.dart';
 import 'connection_requests_screen.dart';
 import 'find_cyclists_screen.dart';
 import 'cyclist_messages_screen.dart';  // Import for messaging screen
+import 'forum_screen.dart';  // Import for forum screen
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -95,6 +96,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 );
               }
+            },
+          ),
+          
+          const SizedBox(height: 10),
+          
+          // Add Forum Button
+          ElevatedButton.icon(
+            icon: const Icon(Icons.forum),
+            label: Text(l10n.cyclingForum),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ForumScreen(),
+                ),
+              );
             },
           ),
           

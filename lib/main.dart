@@ -7,6 +7,7 @@ import 'screens/rewards_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/settings_screen.dart';
 import 'config/theme.dart';
+import 'services/biometric_service.dart'; // Add this import
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -84,6 +85,69 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
+  bool _isAuthenticated = false;
+  
+  @override
+  void initState() {
+    super.initState();
+    _checkBiometricAuth();
+  }
+  
+  Future<void> _checkBiometricAuth() async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool fingerprintEnabled = prefs.getBool('fingerprint_auth_enabled') ?? false;
+    
+    if (fingerprintEnabled) {
+      // Delay a bit to ensure context is available and app is built
+      Future.delayed(const Duration(milliseconds: 500), () async {
+        if (!mounted) return;
+        
+        bool authenticated = await BiometricService.authenticateWithBiometrics(context);
+        setState(() {
+          _isAuthenticated = authenticated;
+        });
+        
+        if (!authenticated) {
+          // If authentication fails, show a dialog and don't allow app access
+          if (!mounted) return;
+          _showAuthFailedDialog();
+        }
+      });
+    } else {
+      setState(() {
+        _isAuthenticated = true; // No authentication required
+      });
+    }
+  }
+  
+  void _showAuthFailedDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: const Text('Authentication Required'),
+        content: const Text('Fingerprint authentication is required to use this app.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _checkBiometricAuth(); // Try again
+            },
+            child: const Text('Try Again'),
+          ),
+          TextButton(
+            onPressed: () {
+              // Exit app functionality would go here
+              // For now, we'll just keep showing the dialog
+              Navigator.of(context).pop();
+              _showAuthFailedDialog();
+            },
+            child: const Text('Exit App'),
+          ),
+        ],
+      ),
+    );
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -106,6 +170,23 @@ class _MainScreenState extends State<MainScreen> {
 
     final l10n = AppLocalizations.of(context);
 
+    // Show a loading screen while authenticating
+    if (!_isAuthenticated) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 20),
+              Text(l10n?.authenticating ?? 'Authenticating...'),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // Show the regular app after authentication
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n?.appTitle ?? 'BicycGo'),

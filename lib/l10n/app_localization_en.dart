@@ -396,4 +396,61 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nearbyCyclistsInfo => 'Nearby Cyclists Info';
+
+  @override
+  String get security => 'Security';
+
+  @override
+  String get enableFingerprintAuth => 'Enable Fingerprint Authentication';
+
+  @override
+  String get useFingerprintToSecure => 'Use fingerprint to secure your account';
+
+  @override
+  String get fingerprintAuthReason => 'To secure your account and make it easier to log in.';
+
+  @override
+  String get fingerprintAuthError => 'Fingerprint authentication failed! Please try again.';
+
+  @override
+  String get biometricsNotAvailable => 'Biometric authentication is not available on this device.';
+
+  @override
+  String get fingerprintEnabled => 'Fingerprint authentication enabled!';
+
+  @override
+  String get authenticating => 'Authenticating...';
+
+  @override
+  String get cyclingForum => 'Cycling Forum';
+
+  @override
+  String get writeNewPost => 'Write a new post';
+
+  @override
+  String get general => 'General';
+
+  @override
+  String get routeTips => 'Cycling Tips';
+
+  @override
+  String get equipment => 'Equipment';
+
+  @override
+  String get events => 'Events';
+
+  @override
+  String get noPostsYet => 'No posts yet';
+
+  @override
+  String get likes => 'Likes';
+
+  @override
+  String get comments => 'Comments';
+
+  @override
+  String get share => 'Share';
+
+  @override
+  String get post => 'Post';
 }

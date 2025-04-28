@@ -287,6 +287,44 @@ abstract class AppLocalizations {
   String get recentRides;
   
   String get rewardPoints;
+
+  String get security;
+
+  String get enableFingerprintAuth;
+
+  String get useFingerprintToSecure;
+
+  String get fingerprintAuthReason;
+
+  String get fingerprintAuthError;
+
+  String get biometricsNotAvailable;
+
+  String get fingerprintEnabled;
+
+  String get authenticating;
+
+  String get cyclingForum;
+
+  String get writeNewPost;
+
+  String get post;
+
+  String get general;
+
+  String get routeTips;
+
+  String get equipment;
+
+  String get events;
+
+  String get noPostsYet;
+
+  String get likes;
+
+  String get comments;
+
+  String get share;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

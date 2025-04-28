@@ -655,6 +655,97 @@
   "connectToSeeHere": "連接以查看這裡的內容",
   "@connectToSeeHere": {
     "description": "連接以查看這裡的內容的提示"
+  },
+
+  "security": "安全性",
+  "@security": {
+    "description": "安全性的標籤"
+  },
+
+  "enableFingerprintAuth": "啟用指紋身份驗證",
+  "@enableFingerprintAuth": {
+    "description": "啟用指紋身份驗證的提示"
+  },
+
+  "useFingerprintToSecure": "使用指紋來保護應用程序",
+  "@useFingerprintToSecure": {
+    "description": "使用指紋來保護應用程序的提示"
+  },
+
+  "fingerprintAuthError": "指紋身份驗證錯誤：{error}",
+  "@fingerprintAuthError": {
+    "description": "指紋身份驗證錯誤的提示",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "指紋不匹配"
+      }
+    }
+  },
+
+  "biometricsNotAvailable": "生物識別不可用",
+  "@biometricsNotAvailable": {
+    "description": "生物識別不可用的提示"
+  },
+
+  "fingerprintEnabled": "指紋身份驗證已啟用",
+  "@fingerprintEnabled": {
+    "description": "指紋身份驗證已啟用的提示"
+  },
+
+  "authenticating": "正在身份驗證...",
+  "@authenticating": {
+    "description": "正在身份驗證的提示"
+  },
+
+  "cyclingForum": "單車論壇",
+  "@cyclingForum": {
+    "description": "單車論壇的標籤"
+  },
+
+  "writeNewPost": "撰寫新帖子",
+  "@writeNewPost": {
+    "description": "撰寫新帖子的提示"
+  },
+
+  "post": "帖子",
+  "@post": {
+    "description": "帖子的標籤"
+  },
+
+  "general": "一般",
+  "@general": {
+    "description": "一般的標籤"
+  },
+
+  "routeTips": "路線提示",
+  "@routeTips": {
+    "description": "路線提示的標籤"
+  },
+
+  "equipment": "設備",
+  "@equipment": {
+    "description": "設備的標籤"
+  },
+
+  "events": "事件",
+  "@events": {
+    "description": "事件的標籤"
+  },
+
+  "like": "喜歡",
+  "@like": {
+    "description": "喜歡的提示"
+  },
+
+  "comments": "評論",
+  "@comments": {
+    "description": "評論的標籤"
+  },
+
+  "share": "分享",
+  "@share": {
+    "description": "分享的提示"
   }
 
 

@@ -644,9 +644,102 @@
   "connectToSeeHere": "Connect with other cyclists to see their activities",
   "@connectToSeeHere": {
     "description": "Prompt to connect with other cyclists to see their activities"
-  }
+  },
 
-  
+  "security": "Security",
+  "@security": {
+    "description": "Label for security settings"
+  },
+
+  "enableFingerprintAuth": "Enable Fingerprint Authentication",
+  "@enableFingerprintAuth": {
+    "description": "Label for enabling fingerprint authentication"
+  },
+
+  "useFingerprintToSecure": "Use fingerprint to secure your app",
+  "@useFingerprintToSecure": {
+    "description": "Description for fingerprint authentication"
+  },
+
+  "fingerprintAuthReason": "Scan your fingerprint to authenticate",
+  "@fingerprintAuthReason": {
+    "description": "Reason displayed when requesting fingerprint scan"
+  },
+
+  "fingerprintAuthError": "Fingerprint authentication error",
+  "@fingerprintAuthError": {
+    "description": "Error message for fingerprint authentication"
+  },
+
+  "biometricsNotAvailable": "Biometric authentication not available on this device",
+  "@biometricsNotAvailable": {
+    "description": "Message when biometrics are not available"
+  },
+
+  "fingerprintEnabled": "Fingerprint authentication enabled",
+  "@fingerprintEnabled": {
+    "description": "Success message when fingerprint authentication is enabled"
+  },
+
+  "authenticating": "Authenticating...",
+  "@authenticating": {
+    "description": "Message shown when authenticating with biometrics"
+  },
+
+  "cyclingForum": "Cycling Forum",
+  "@cyclingForum": {
+    "description": "Label for the cycling forum feature"
+  },
+
+  "writeNewPost": "Write a new post...",
+  "@writeNewPost": {
+    "description": "Placeholder text for writing a new forum post"
+  },
+
+  "post": "Post",
+  "@post": {
+    "description": "Button text to submit a new post"
+  },
+
+  "general": "General",
+  "@general": {
+    "description": "Label for general forum category"
+  },
+
+  "routeTips": "Route Tips",
+  "@routeTips": {
+    "description": "Label for route tips forum category"
+  },
+
+  "equipment": "Equipment",
+  "@equipment": {
+    "description": "Label for equipment forum category"
+  },
+
+  "events": "Events",
+  "@events": {
+    "description": "Label for events forum category"
+  },
+
+  "noPostsYet": "No posts yet. Be the first to post!",
+  "@noPostsYet": {
+    "description": "Message shown when there are no forum posts"
+  },
+
+  "likes": "Likes",
+  "@likes": {
+    "description": "Label for likes on a post"
+  },
+
+  "comments": "Comments",
+  "@comments": {
+    "description": "Label for comments on a post"
+  },
+
+  "share": "Share",
+  "@share": {
+    "description": "Button text to share content"
+  }
 }
 
 
