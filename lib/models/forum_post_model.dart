@@ -4,6 +4,7 @@ class ForumPost {
   final String authorName;
   final String? authorPhotoUrl;
   final String content;
+  final String? imageUrl;
   final DateTime timePosted;
   final int likes;
   final int comments;
@@ -15,6 +16,7 @@ class ForumPost {
     required this.authorName,
     this.authorPhotoUrl,
     required this.content,
+    this.imageUrl,
     required this.timePosted,
     this.likes = 0,
     this.comments = 0,
@@ -27,6 +29,7 @@ class ForumPost {
     String? authorName,
     String? authorPhotoUrl,
     String? content,
+    String? imageUrl,
     DateTime? timePosted,
     int? likes,
     int? comments,
@@ -38,6 +41,7 @@ class ForumPost {
       authorName: authorName ?? this.authorName,
       authorPhotoUrl: authorPhotoUrl ?? this.authorPhotoUrl,
       content: content ?? this.content,
+      imageUrl: imageUrl ?? this.imageUrl,
       timePosted: timePosted ?? this.timePosted,
       likes: likes ?? this.likes,
       comments: comments ?? this.comments,

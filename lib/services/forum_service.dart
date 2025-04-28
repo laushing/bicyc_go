@@ -1,7 +1,10 @@
 import '../models/forum_post_model.dart';
 import 'user_service.dart';
+import 'dart:math';
 
 class ForumService {
+  static final Random _random = Random();
+
   // Get mock forum posts for now - in a real app, this would fetch from a database
   static List<ForumPost> getMockPosts() {
     return [
@@ -59,13 +62,16 @@ class ForumService {
   }
 
   // Create a new forum post - in a real app, this would save to a database
-  static Future<ForumPost> createPost(String content) async {
+  static Future<ForumPost> createPost(String content, [String? imageUrl]) async {
+    // Simulate API call delay
+    await Future.delayed(const Duration(milliseconds: 800));
+
     // Get current user for author details
     final currentUser = await UserService.getCurrentUser();
-    
+
     // Generate a random ID - in a real app, this would be handled by the database
     final String postId = DateTime.now().millisecondsSinceEpoch.toString();
-    
+
     // Create and return a new post
     return ForumPost(
       id: postId,
@@ -73,8 +79,11 @@ class ForumService {
       authorName: currentUser?.name ?? 'Anonymous Cyclist',
       authorPhotoUrl: currentUser?.photoUrl,
       content: content,
+      imageUrl: imageUrl,
       timePosted: DateTime.now(),
-      category: 'general', // Default category
+      category: ['general', 'routeTips', 'equipment', 'events'][_random.nextInt(4)],
+      likes: 0,
+      comments: 0,
     );
   }
 }
