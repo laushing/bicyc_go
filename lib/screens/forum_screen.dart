@@ -4,7 +4,9 @@ import '../models/forum_post_model.dart';
 import '../services/forum_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'package:flutter_image_filters/flutter_image_filters.dart';
+import 'package:pro_image_editor/pro_image_editor.dart';
+import 'dart:typed_data';
+import 'package:path_provider/path_provider.dart';
 
 class ForumScreen extends StatefulWidget {
   const ForumScreen({super.key});
@@ -19,8 +21,6 @@ class _ForumScreenState extends State<ForumScreen> with TickerProviderStateMixin
   final TextEditingController _newPostController = TextEditingController();
   late TabController _tabController;
   File? _selectedImage;
-  bool _isEditingImage = false;
-  String? _editedImageUrl;
   final ImagePicker _imagePicker = ImagePicker();
   
   @override
@@ -66,55 +66,227 @@ class _ForumScreenState extends State<ForumScreen> with TickerProviderStateMixin
   }
   
   Future<void> _editImage() async {
-    if (_selectedImage == null) return;
+    if (_selectedImage == null) return; 
     
-    setState(() {
-      _isEditingImage = true;
-    });
-    
-    // This would be replaced with proper image editing implementation
-    await Future.delayed(const Duration(milliseconds: 500));
-    
-    // Simulate edited image URL (in a real app this would be the actual edited image)
-    setState(() {
-      _editedImageUrl = _selectedImage!.path;
-      _isEditingImage = false;
-    });
+    try {
+      if (!mounted) return; 
+
+      // Create a callback with explicit void return type
+      final callbacks = ProImageEditorCallbacks(
+        onImageEditingComplete: (Uint8List bytes) async {
+          // Just pop with the bytes, don't return anything
+          Navigator.pop(context, bytes);
+        },
+      );
+
+      final editedImageBytes = await Navigator.push<Uint8List?>(
+        context,
+        MaterialPageRoute(
+          builder: (builderContext) => ProImageEditor.file(
+            _selectedImage!,
+            callbacks: callbacks,
+          ),
+        ),
+      );
+
+      // 3. Early return if no longer mounted or no bytes returned
+      if (!mounted || editedImageBytes == null) {
+        print('Image editing cancelled or failed.');
+        return;
+      }
+
+      // Show loading indicator while processing the image
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Processing edited image...'), duration: Duration(seconds: 1)),
+        );
+      }
+
+      // 4. Process the edited image
+      try {
+        final tempDir = await getTemporaryDirectory();
+        final path = '${tempDir.path}/edited_${DateTime.now().millisecondsSinceEpoch}.png';
+        final editedFile = await File(path).writeAsBytes(editedImageBytes); 
+        
+        // 5. Final mounted check before setState
+        if (!mounted) return;
+        
+        // 6. Update the state
+        setState(() {
+          _selectedImage = editedFile;
+        });
+        
+        // Add confirmation message
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Image edited successfully')),
+          );
+        }
+        
+        print('Image edited successfully. New path: ${_selectedImage?.path}');
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to save edited image: $e')),
+          );
+        }
+      }
+      
+    } catch (e, s) {
+      print('Error in image editor: $e\n$s');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to edit image: $e')),
+        );
+      }
+    }
   }
   
   void _removeImage() {
     setState(() {
       _selectedImage = null;
-      _editedImageUrl = null;
     });
   }
 
   Future<void> _createNewPost(String content) async {
-    if (content.trim().isEmpty && _selectedImage == null) return;
+    // Ensure content or image exists
+    if (content.trim().isEmpty && _selectedImage == null) {
+      print('Cannot create post: Both content and image are empty/null');
+      // Show user feedback
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please enter text or select an image to post')),
+        );
+      }
+      return;
+    }
+
+    // Store the image path *before* clearing _selectedImage later
+    final String? imagePath = _selectedImage?.path; 
+    print('--- _createNewPost ---');
+    print('_selectedImage object: ${_selectedImage != null ? "exists" : "is null"}');
+    print('Image path being sent to service: $imagePath');
+
+    // Improved image handling for reliability
+    String? finalImagePath;
+    if (imagePath != null) {
+      try {
+        // First, check if the original file exists
+        final originalFile = File(imagePath);
+        if (!await originalFile.exists()) {
+          print('Original image file does not exist: $imagePath');
+          // Proceed without an image
+        } else {
+          // Read image into memory
+          final imageBytes = await originalFile.readAsBytes();
+          
+          // Try multiple strategies to save the image persistently
+          finalImagePath = await _saveImageWithFallbacks(imageBytes, imagePath);
+          
+          if (finalImagePath != null) {
+            print('Final image path for post: $finalImagePath');
+          } else {
+            print('Failed to save image. Proceeding without image.');
+          }
+        }
+      } catch (e) {
+        print('Error preparing image for post: $e');
+        // Continue without the image rather than failing the whole post
+      }
+    }
 
     setState(() {
       _isLoading = true;
     });
 
     try {
-      // This would typically create a post through a service
+      // Use finalImagePath which is either null or a valid path to a saved image
       final newPost = await ForumService.createPost(
         content, 
-        _selectedImage != null ? _editedImageUrl ?? _selectedImage!.path : null
+        finalImagePath
       );
+      
+      print('Image URL received from service in newPost: ${newPost.imageUrl}');
+
+      // Check if mounted before updating state after async gap
+      if (!mounted) return; 
+
+      // Ensure the image path is accessible in the post
+      if (newPost.imageUrl != null) {
+        // Verify the file exists at the path stored in newPost
+        final exists = await File(newPost.imageUrl!).exists();
+        print('Does post image file exist? $exists (path: ${newPost.imageUrl})');
+      }
+
       setState(() {
-        _posts.insert(0, newPost);
+        _posts.insert(0, newPost); // Add the new post
         _isLoading = false;
-        _selectedImage = null;
-        _editedImageUrl = null;
+        _selectedImage = null; // Clear the selected image for the next post
       });
-      _newPostController.clear();
+      _newPostController.clear(); // Clear the text field
+      print('--- Post created and state updated ---');
+      
+      // Show success message
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Post created successfully')),
+        );
+      }
     } catch (e) {
+      // Check if mounted before updating state or showing SnackBar
+      if (!mounted) return; 
       setState(() {
         _isLoading = false;
       });
       print('Error creating post: $e');
+      // Optionally show an error message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to create post: $e')),
+      );
     }
+  }
+  
+  // Helper method to try multiple image saving strategies
+  Future<String?> _saveImageWithFallbacks(Uint8List imageBytes, String originalPath) async {
+    // Strategy 1: Save to application documents directory (most reliable)
+    try {
+      final appDir = await getApplicationDocumentsDirectory();
+      final fileName = 'post_image_${DateTime.now().millisecondsSinceEpoch}.png';
+      final destination = File('${appDir.path}/$fileName');
+      
+      await destination.writeAsBytes(imageBytes);
+      print('Successfully saved image to app documents: ${destination.path}');
+      return destination.path;
+    } catch (e) {
+      print('Strategy 1 failed: $e');
+    }
+    
+    // Strategy 2: Save to cache directory (less reliable but still useful)
+    try {
+      final cacheDir = await getTemporaryDirectory();
+      final fileName = 'post_image_${DateTime.now().millisecondsSinceEpoch}.png';
+      final destination = File('${cacheDir.path}/$fileName');
+      
+      await destination.writeAsBytes(imageBytes);
+      print('Successfully saved image to cache: ${destination.path}');
+      return destination.path;
+    } catch (e) {
+      print('Strategy 2 failed: $e');
+    }
+    
+    // Strategy 3: Try to use the original path if it's still valid
+    try {
+      final originalFile = File(originalPath);
+      if (await originalFile.exists()) {
+        print('Using original file path: $originalPath');
+        return originalPath;
+      }
+    } catch (e) {
+      print('Strategy 3 failed: $e');
+    }
+    
+    // All strategies failed
+    return null;
   }
 
   @override
@@ -199,7 +371,6 @@ class _ForumScreenState extends State<ForumScreen> with TickerProviderStateMixin
                     ),
                   ],
                 ),
-                
                 // Image preview and edit options
                 if (_selectedImage != null)
                   Container(
@@ -218,9 +389,7 @@ class _ForumScreenState extends State<ForumScreen> with TickerProviderStateMixin
                               constraints: const BoxConstraints(
                                 maxHeight: 200,
                               ),
-                              child: _isEditingImage
-                                  ? const Center(child: CircularProgressIndicator())
-                                  : Image.file(_selectedImage!),
+                              child: Image.file(_selectedImage!),
                             ),
                             IconButton(
                               icon: const Icon(Icons.close, color: Colors.red),
@@ -249,7 +418,6 @@ class _ForumScreenState extends State<ForumScreen> with TickerProviderStateMixin
               ],
             ),
           ),
-          
           // Posts list inside TabBarView
           Expanded(
             child: TabBarView(
@@ -301,7 +469,12 @@ class ForumPostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    print('--- ForumPostCard Build ---'); 
+    print('Building card for post by ${post.authorName}, imageUrl: ${post.imageUrl}'); 
     
+    // Determine if the imageUrl is likely a local file path
+    final bool isLocalPath = post.imageUrl != null && post.imageUrl!.startsWith('/'); 
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
@@ -346,14 +519,20 @@ class ForumPostCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
-                    post.imageUrl!,
-                    errorBuilder: (context, error, stackTrace) => 
-                      Image.file(File(post.imageUrl!)),
-                  ),
+                  // --- Updated Image Loading Logic ---
+                  child: isLocalPath 
+                    ? _buildLocalImage(post.imageUrl!) // Try loading as local file first
+                    : Image.network( // Fallback to network image
+                        post.imageUrl!,
+                        errorBuilder: (context, error, stackTrace) {
+                          print('Image.network failed for ${post.imageUrl}. Error: $error'); 
+                          // If network fails, maybe it was intended as local? (Less likely now)
+                          return _buildLocalImage(post.imageUrl!); 
+                        },
+                      ),
+                  // --- End of Updated Logic ---
                 ),
               ),
-            
             const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -379,5 +558,23 @@ class ForumPostCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // Helper widget to load local image with existence check and error handling
+  Widget _buildLocalImage(String path) {
+    print('Attempting to load local image: $path');
+    try {
+      final file = File(path);
+      if (file.existsSync()) {
+        print('File exists. Loading Image.file: $path');
+        return Image.file(file);
+      } else {
+        print('File does not exist at path: $path');
+        return const Icon(Icons.broken_image, size: 50, color: Colors.grey); 
+      }
+    } catch (e) {
+      print('Error loading local image ($path): $e');
+      return const Icon(Icons.error_outline, size: 50, color: Colors.red);
+    }
   }
 }

@@ -12,4 +12,4 @@ A new Flutter project.
 - Includes a profile setup interface for personal customization.
 - Features a rewards system that calculates incentives based on cycling mileage.
 
-version: 2.1
+version: 2.2
